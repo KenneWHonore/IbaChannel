@@ -1,139 +1,188 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-const setting = () => {
-  const [mode, setMode] = useState('light');
+export default Setting = () => {
+  const navigation = useNavigation();
+  const [theme, setTheme] = useState('light'); // Initialize the theme to "light"
 
-  const handleModeChange = (newMode) => {
-    setMode(newMode);
+  const handleImagePress = (imageNumber) => {
+    if (imageNumber == 2) {
+      setTheme('dark'); // Change the theme to "dark" when image 2 is clicked
+    } else {
+      setTheme('light'); // Reset the theme to "light" for other images
+    }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Mode apparence</Text>
-      <View style={styles.modesContainer}>
-        <TouchableOpacity
-          style={[styles.modeButton, mode === 'light' && styles.activeMode]}
-          onPress={() => handleModeChange('light')}
-        >
-          <Text style={styles.modeButtonText}>Mode clair</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.modeButton, mode === 'dark' && styles.activeMode]}
-          onPress={() => handleModeChange('dark')}
-        >
-          <Text style={styles.modeButtonText}>Mode sombre</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.modeButton, mode === 'auto' && styles.activeMode]}
-          onPress={() => handleModeChange('auto')}
-        >
-          <Text style={styles.modeButtonText}>Automatique</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.label}>Langue</Text>
-      <View style={styles.languageContainer}>
-        <TouchableOpacity style={styles.languageButton}>
-          <Text style={styles.languageButtonText}>Francais</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.languageButton}>
-          <Text style={styles.languageButtonText}>English</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.label}>Notification</Text>
-      <View style={styles.notificationContainer}>
-        <TouchableOpacity style={styles.notificationButton}>
-          <Text style={styles.notificationButtonText}>Activé</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.notificationButton}>
-          <Text style={styles.notificationButtonText}>Désactivé</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.applyButton} onPress={() => {}}>
-        <Text style={styles.applyButtonText}>Appliquer</Text>
+    <View style={[styles.container, theme == 'dark' ? styles.darkTheme : styles.lightTheme]}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.button} activeOpacity={0.6}>
+        <AntDesign name="arrowleft" size={32} color="#FFB400" />
       </TouchableOpacity>
+      <Text style={styles.apparence}>Mode apparence</Text>
+      <Text style={styles.des}>Personnalisez votre theme pour une experience utilisateur</Text>
+      <Text style={styles.des}>unique</Text>
+      <View style={styles.imagesContainer}>
+        <TouchableOpacity onPress={() => handleImagePress(1)}>
+          <Image style={styles.image1} source={require('../assets/setting1.png')} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleImagePress(2)}>
+          <Image style={styles.image} source={require('../assets/setting2.png')} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleImagePress(3)}>
+          <Image style={styles.image} source={require('../assets/setting3.png')} />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.langueContainer}>
+        <Text style={styles.langue}>Langue</Text>
+        <TouchableOpacity onPress={() => handleImagePress(1)}>
+          <Text style={styles.langueSelect}>Francais</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.notifContainer}>
+        <Text style={styles.notif}>Notification</Text>
+        <TouchableOpacity onPress={() => handleImagePress(1)}>
+          <Text style={styles.notifselect}>Activer</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('Privacy')} style={styles.buttonA}>
+          <Text style={styles.buttonText}>Appliquer</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: 'white',
     flex: 1,
-    backgroundColor: '#1A1A1A',
-    padding: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  title: {
+  lightTheme: {
+    backgroundColor: 'white',
+  },
+  darkTheme: {
+    backgroundColor: 'black',
+  },
+  apparence: {
+    fontWeight: '500',
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#FFFFFF',
+    marginRight: 165,
+    marginTop:120,
   },
-  modesContainer: {
+  imagesContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: -30,
   },
-  modeButton: {
-    flex: 1,
-    backgroundColor: '#333333',
-    padding: 15,
-    margin: 5,
-    borderRadius: 10,
-  },
-  activeMode: {
-    backgroundColor: '#007AFF',
-  },
-  modeButtonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-  },
-  label: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: '#FFFFFF',
-  },
-  languageContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  languageButton: {
-    flex: 1,
-    backgroundColor: '#333333',
-    padding: 15,
-    margin: 5,
-    borderRadius: 10,
-  },
-  languageButtonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-  },
-  notificationContainer: {
-    flexDirection: 'row',
-    marginBottom: 20,
-  },
-  notificationButton: {
-    flex: 1,
-    backgroundColor: '#333333',
-    padding: 15,
-    margin: 5,
-    borderRadius: 10,
-  },
-  notificationButtonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-  },
-  applyButton: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 10,
-  },
-  applyButtonText: {
-    color: '#FFFFFF',
-    textAlign: 'center',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
+  image: {
+    width: 360 / 3 - 20, // 20 is the spacing between images
+    height: 300,
+    resizeMode: 'contain',
+    marginRight: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
 
-export default setting;
+  },
+  image1: {
+    width: 353 / 3 - 20, // 20 is the spacing between images
+    height: 290,
+    resizeMode: 'contain',
+    marginRight: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    marginRight: 20,
+    marginLeft: 30
+  },
+  des: {
+    fontSize: 12,
+    width: '100%',
+    flexWrap: 'wrap',
+    marginLeft: 60,
+    color: '#62656b',
+  },
+  langueContainer:
+  {
+    flexDirection: 'row',
+  },
+  langue:
+  {
+    fontWeight: '400',
+    fontSize: 16,
+    marginRight: 165,
+    fontFamily: 'Montsera',
+    marginLeft: 5
+  },
+  langueSelect:
+  {
+    fontFamily: 'Montsera',
+    fontWeight: '500',
+    fontSize: 16,
+    marginLeft: 70,
+    color: '#FFB400',
+
+  },
+  notifContainer:
+  {
+    flexDirection: 'row',
+    marginTop: 20,
+  },
+  notif:
+  {
+    fontWeight: '400',
+    fontSize: 16,
+    marginRight: 165,
+    fontFamily: 'Montsera',
+    marginRight: 158,
+  },
+  notifselect:
+  {
+    fontFamily: 'Montsera',
+    fontWeight: '500',
+    fontSize: 16,
+    marginLeft: 45,
+    color: '#FFB400',
+
+  },
+  buttonContainer:
+  {
+    marginTop: 30,
+    marginVertical: -80,
+  },
+  buttonA: {
+    backgroundColor: '#FFB400',
+    padding: 15,
+    paddingHorizontal: 70,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  },
+  buttonText: {
+    fontSize: 16,
+    color: '#fff',
+    fontWeight: '500'
+  },
+  button: {
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#fff',
+    marginLeft:-325,
+    marginTop:-150,
+
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.5,
+    // shadowRadius: 4,
+  },
+
+});

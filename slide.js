@@ -19,7 +19,7 @@ export default [
         id : '3',
         title: 'Retrouvez l’essentiel de l’actualité',
         description: 'Toute l’actualité financiere et economique en temps reel',
-        image: require('./assets/new3.png'),
+        image: require('./assets/new4.png'),
     },
     {
         bigTitle:'Notif',
