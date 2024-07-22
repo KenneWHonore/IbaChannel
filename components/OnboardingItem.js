@@ -1,22 +1,35 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import { View, Text, StyleSheet, useWindowDimensions, Image, } from "react-native";
 import * as Animatable from 'react-native-animatable';
 
 
 
 
-export default OnboardingItem = ({ item }) => {
+export default OnboardingItem = ({ item, index, currentIndex }) => {
     const { width } = useWindowDimensions();
+    const titleRef = useRef()
+    const descriptionRef = useRef()
+    const imageRef = useRef()
+
+    useEffect(() => {
+        if(index === currentIndex) {
+            titleRef?.current.bounceIn()
+            descriptionRef?.current.bounceIn()
+            imageRef?.current.bounceIn()
+        }
+    }, [currentIndex]);
+
+
     return (
         <View style={[styles.container, { width }]}>
             {/* <View><Text style={styles.bigTitle}>{item.bigTitle}</Text>
-            
+
             </View> */}
-            <Animatable.Image source={item.image} style={[styles.image, { width, resizeMode: 'contain' }]} animation="bounceIn"/>
+            <Animatable.Image ref={imageRef} source={item.image} style={[styles.image, { width, resizeMode: 'contain' }]} />
 
             <View style={{ flex: 0.3 }}>
-                <Animatable.Text style={styles.title} animation="bounceIn">{item.title}</Animatable.Text>
-                <Animatable.Text style={styles.description} animation="bounceIn">{item.description}</Animatable.Text>
+                <Animatable.Text ref={titleRef} style={styles.title}>{item.title}</Animatable.Text>
+                <Animatable.Text ref={descriptionRef} style={styles.description}>{item.description}</Animatable.Text>
 
             </View>
         </View>
@@ -26,7 +39,7 @@ export default OnboardingItem = ({ item }) => {
 
 const styles = StyleSheet.create({
     container: {
-        
+
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
         fontSize: 28,
         textAlign: 'center',
         marginBottom: 10,
-        
+
     },
     bigTitle:
     {
@@ -62,7 +75,7 @@ const styles = StyleSheet.create({
         color:'#493d8a',
         marginRight:255,
         marginTop:20,
-        
+
     }
 
 

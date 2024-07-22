@@ -17,10 +17,11 @@ export default function Onboarding() {
   const viewableIndexChanged = useRef(({ viewableItems }) => {
     setCurrentIndex(viewableItems[0].index);
   }).current;
+
   const viewConfig = useRef({ viewAreaCoveragePercentThreshold: 50 }).current;
 
   const scrollTo = () => {
-    
+
     if (currentIndex < slide.length - 1) {
       slidesRef.current.scrollToIndex({ index: currentIndex + 1 });
 
@@ -30,10 +31,12 @@ export default function Onboarding() {
 
     }
   };
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 3 }}>
-        <FlatList data={slide} renderItem={({ item }) => <OnboardingItem item={item} />}
+        <FlatList data={slide}
+          renderItem={({ item, index }) => <OnboardingItem index={index} currentIndex={currentIndex} item={item} />}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
