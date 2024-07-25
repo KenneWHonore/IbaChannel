@@ -25,11 +25,11 @@ export default OnboardingItem = ({ item, index, currentIndex }) => {
             {/* <View><Text style={styles.bigTitle}>{item.bigTitle}</Text>
 
             </View> */}
-            <Animatable.Image ref={imageRef} source={item.image} style={[styles.image, { width, resizeMode: 'contain' }]} />
+            <Animatable.Image duration={1000} ref={imageRef} source={item.image} style={[styles.image, { width, resizeMode: 'contain' }]} />
 
             <View style={{ flex: 0.3 }}>
-                <Animatable.Text ref={titleRef} style={styles.title}>{item.title}</Animatable.Text>
-                <Animatable.Text ref={descriptionRef} style={styles.description}>{item.description}</Animatable.Text>
+                <Animatable.Text duration={2000} ref={titleRef} style={styles.title}>{item.title}</Animatable.Text>
+                <Animatable.Text duration={2000} ref={descriptionRef} style={styles.description}>{item.description}</Animatable.Text>
 
             </View>
         </View>

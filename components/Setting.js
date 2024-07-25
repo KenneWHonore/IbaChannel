@@ -41,13 +41,13 @@ export default Setting = () => {
                         <Text style={styles.langueSelect}>Francais</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={[styles.langueContainer, {marginTop: 10}]}>
+                <View style={[styles.langueContainer, {marginTop: 20}]}>
                     <Text style={styles.notif}>Notification</Text>
                     <TouchableOpacity onPress={() => handleImagePress(1)}>
                         <Text style={styles.notifselect}>Activer</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.buttonContainer}>
+                <View style={[styles.buttonContainer, {marginTop:40}]}>
                     <TouchableOpacity onPress={() => navigation.navigate('Privacy')} style={styles.buttonA}>
                         <Text style={styles.buttonText}>Appliquer</Text>
                     </TouchableOpacity>
@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
         {
             fontWeight: '400',
             fontSize: 16,
-            marginRight: 165,
             fontFamily: 'Montsera',
         },
     langueSelect:
@@ -137,7 +136,7 @@ const styles = StyleSheet.create({
             fontWeight: '400',
             fontSize: 16,
             fontFamily: 'Montsera',
-            marginRight: 158,
+           
         },
     notifselect:
         {
@@ -150,7 +149,7 @@ const styles = StyleSheet.create({
     buttonContainer:
         {
             marginTop: 30,
-            marginVertical: -80,
+           
         },
     buttonA: {
         backgroundColor: '#FFB400',

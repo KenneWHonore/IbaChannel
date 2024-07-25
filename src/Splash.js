@@ -6,7 +6,7 @@ const Splash = ({navigation}) => {
      useEffect(() => {
          setTimeout(() => {
              navigation.navigate('Onboarding');
-         }, 10000);
+         }, 5000);
     }, []);
 
     return (
