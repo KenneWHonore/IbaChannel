@@ -31,4 +31,12 @@ export default [
         temps: 'il y a 16 mn',
         image2: require('./assets/3p.png')
     },
+    {
+        image: require('./assets/route.jpg'),
+        title: 'Economie',
+        text: 'des travaux de constructions pour la nouvelle route sur qui s eleve a 1,5M de Xaf ...',
+        voirplus: 'Voir plus',
+        temps: 'il y a 17 mn',
+        image2: require('./assets/3p.png')
+    },
 ]
