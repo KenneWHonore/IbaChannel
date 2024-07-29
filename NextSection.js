@@ -2,7 +2,7 @@ export default [
     {
         image: require('./assets/reuinion2.jpg'),
         title: 'Economie',
-        text: 'reuinion des dirigeants du burkina fasso par rapport a la hausse des prix sanitaire...',
+        text: 'Reuinion des dirigeants du burkina fasso par rapport a la hausse des prix sanitaire...',
         voirplus: 'Voir plus',
         temps: 'il y a 8 mn',
         image2: require('./assets/3p.png')
@@ -18,7 +18,7 @@ export default [
     {
         image: require('./assets/reuinion.jpg'),
         title: 'Economie',
-        text: 'reuinion des dirigeants du Cameroun par rapport a la hausse des prix sanitaire...',
+        text: 'Reuinion des dirigeants du Cameroun par rapport a la hausse des prix sanitaire...',
         voirplus: 'Voir plus',
         temps: 'il y a 15 mn',
         image2: require('./assets/3p.png')
@@ -33,8 +33,8 @@ export default [
     },
     {
         image: require('./assets/route.jpg'),
-        title: 'Economie',
-        text: 'des travaux de constructions pour la nouvelle route sur qui s eleve a 1,5M de Xaf ...',
+        title: 'Finance',
+        text: 'Des travaux de constructions pour la nouvelle route sur qui s eleve a 1,5M de Xaf ...',
         voirplus: 'Voir plus',
         temps: 'il y a 17 mn',
         image2: require('./assets/3p.png')

@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { View, Text, StyleSheet, FlatList, Animated } from "react-native";
+import { View, Text, StyleSheet, FlatList, Animated ,TouchableOpacity} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import slide from "../slide";
 import OnboardingItem from "./OnboardingItem"
@@ -30,11 +30,15 @@ export default function Onboarding() {
       navigation.navigate('Setting');
 
     }
+ 
   };
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 3 }}>
+      <TouchableOpacity /*onPress={navigation.navigate('Setting')}}*/>
+            <Text style={styles.passer}>Passer</Text>
+            </TouchableOpacity>
         <FlatList data={slide}
           renderItem={({ item, index }) => <OnboardingItem index={index} currentIndex={currentIndex} item={item} />}
           horizontal
@@ -63,5 +67,20 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  passer:
+  {
+      fontSize:16,
+      color:'#FFB400',
+      fontWeight:400,
+      textAlign: 'right',
+      marginRight:15,
+      Width:60,
+      margin:5,
+     
+      
+
+
+      
   },
 });

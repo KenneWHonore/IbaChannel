@@ -1,11 +1,21 @@
 import React from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import NextSection from '../NextSection';
+import lePointActu from '../LePointActu';
+import { useNavigation } from '@react-navigation/native';
+import debat from '../debat';
 
 
 const Acceuil = () => {
+    const navigation = useNavigation();
+    const handlePress = () => {
+        // Navigation vers une autre vue
+        navigation.navigate('VoirPlus');
+    };
+
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}
+            showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
                 <TouchableOpacity>
                     <Image style={[styles.image1, { width: 20, height: 20 }]} source={require('../assets/Menu.png')} />
@@ -87,30 +97,150 @@ const Acceuil = () => {
 
             <View style={styles.newSection}>
                 <FlatList data={NextSection}
-                renderItem={({item}) =>(
+                    keyExtractor={(item, index) => index.toString()}
 
-                    <View style={[styles.CardSection, {marginBottom:15}]}>
-                        <TouchableOpacity>
-                        <Image source={item.image} style={styles.image}/>
-                        </TouchableOpacity>
-                        <View>
-                        <Text style={styles.title}>{item.title}</Text>
-                        <Text style={styles.text}>{item.text}</Text>
-                        <View style={styles.VTI}>
-                        <TouchableOpacity>
-                        <Text style={styles.Voirp}>{item.voirplus}</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.temps}>{item.temps}</Text>
-                        <Image source={item.image2} style={styles.image2}/>
+                    renderItem={({ item }) => (
 
+
+                        <View style={[styles.CardSection, { marginBottom: 15 }]}>
+                            <TouchableOpacity>
+                                <Image source={item.image} style={styles.image} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={styles.title}>{item.title}</Text>
+                                <Text style={styles.text}>{item.text}</Text>
+                                <View style={styles.VTI}>
+                                    <TouchableOpacity onPress={handlePress}>
+                                        <Text style={styles.Voirp}>{item.voirplus}</Text>
+                                    </TouchableOpacity>
+                                    <Text style={styles.temps}>{item.temps}</Text>
+                                    <Image source={item.image2} style={styles.image2} />
+
+                                </View>
+                            </View>
                         </View>
-                        </View>
-                    </View>
-                )}
+                    )}
                 />
+
+            </View>
+            <View style={styles.BrefActu}>
+                <View style={styles.AB}>
+                    <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 20 }}>Le point sur l'actualité</Text>
+                </View>
+                <View style={styles.Contain}>
+                    <FlatList data={lePointActu}
+                        keyExtractor={(item, index) => index.toString()}
+
+                        renderItem={({ item }) => (
+                            <View style={styles.containImage}>
+                                <View style={{ position: 'relative' }}>
+                                    <TouchableOpacity>
+                                        <Image source={item.image} style={styles.imageActu} filter="grayscale(0.5)" />
+                                        <Text style={[styles.ImageText, { position: 'absolute', top: 10, left: 10, fontSize: 16, color: '#fff' }]}>{item.text}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        )}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                    />
+                </View>
+            </View>
+            <View style={styles.suiteActu}>
+                <TouchableOpacity>
+                    <Image style={styles.imageSA} source={require('../assets/suiteActu.jpg')} />
+                </TouchableOpacity>
+                <Text style={{marginLeft:20,opacity:0.8,fontWeight:200}}>Actu</Text>
+                <Text style={{marginLeft:20, marginTop:5}}>France:Emmanuel Macron prend une photo avec les chefs d'etats invite  a occation des JO de paris 2024...</Text>
             </View>
 
-        </View>
+            <View style={styles.newSection2}>
+                <FlatList data={NextSection}
+                    keyExtractor={(item, index) => index.toString()}
+
+                    renderItem={({ item }) => (
+
+
+                        <View style={[styles.CardSection, { marginBottom: 15 }]}>
+                            <TouchableOpacity>
+                                <Image source={item.image} style={styles.image} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={styles.title}>{item.title}</Text>
+                                <Text style={styles.text}>{item.text}</Text>
+                                <View style={styles.VTI}>
+                                    <TouchableOpacity onPress={handlePress}>
+                                        <Text style={styles.Voirp}>{item.voirplus}</Text>
+                                    </TouchableOpacity>
+                                    <Text style={styles.temps}>{item.temps}</Text>
+                                    <Image source={item.image2} style={styles.image2} />
+
+                                </View>
+                            </View>
+                        </View>
+                    )}
+                />
+
+            </View>
+            <View style={styles.suiteActu2}>
+            <FlatList data={debat}
+                        keyExtractor={(item, index) => index.toString()}
+
+                        renderItem={({ item }) => (
+                            <View style={styles.containImage}>
+                                <View>
+                                    <TouchableOpacity>
+                                        <Image source={item.image} style={styles.imageSuiteActu2} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View>
+                                     <Text style={[styles.ImageText2]}>{item.text}</Text> 
+                                </View>
+                                <Text style={[styles.ImageText3]}>{item.text2}</Text> 
+                                
+                            </View>
+                        )}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                    />
+            </View>
+            <View style={styles.suiteActu}>
+                <TouchableOpacity>
+                    <Image style={styles.imageSA} source={require('../assets/suiteActu.jpg')} />
+                </TouchableOpacity>
+                <Text style={{marginLeft:20,opacity:0.8,fontWeight:200}}>Actu</Text>
+                <Text style={{marginLeft:20, marginTop:5}}>France:Emmanuel Macron prend une photo avec les chefs d'etats invite  a occation des JO de paris 2024...</Text>
+            </View>
+            <View style={styles.newSection3}>
+                <FlatList data={NextSection}
+                    keyExtractor={(item, index) => index.toString()}
+
+                    renderItem={({ item }) => (
+
+
+                        <View style={[styles.CardSection, { marginBottom: 15 }]}>
+                            <TouchableOpacity>
+                                <Image source={item.image} style={styles.image} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={styles.title}>{item.title}</Text>
+                                <Text style={styles.text}>{item.text}</Text>
+                                <View style={styles.VTI}>
+                                    <TouchableOpacity onPress={handlePress}>
+                                        <Text style={styles.Voirp}>{item.voirplus}</Text>
+                                    </TouchableOpacity>
+                                    <Text style={styles.temps}>{item.temps}</Text>
+                                    <Image source={item.image2} style={styles.image2} />
+
+                                </View>
+                            </View>
+                        </View>
+                    )}
+                />
+
+            </View>
+
+        </ScrollView>
     );
 };
 const deviceWidth = Math.round(Dimensions.get('window').width);
@@ -119,6 +249,8 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         flex: 1,
+        overflow: 'scroll'
+
     },
     header:
     {
@@ -183,65 +315,137 @@ const styles = StyleSheet.create({
     },
     CardSection:
     {
-        flexDirection:'row',
+        flexDirection: 'row',
     },
     newSection:
     {
-        flex:1,
-        width:'95%',
+        flex: 1,
+        width: '95%',
         margin: 20,
-        marginTop:0,
-        overflow:'scroll'
+        marginTop: 0,
+        // overflow: 'scroll'
+    },
+    newSection2:
+    {
+        flex: 1,
+        width: '95%',
+        margin: 20,
+        marginTop: 0,
+        //overflow: 'scroll',
+        marginTop:20,
+    },
+    newSection3:
+    {
+        flex: 1,
+        width: '95%',
+        margin: 20,
+        marginTop: 0,
+        //overflow: 'scroll',
+        marginTop:20,
     },
     image:
     {
-        height:100,
-        width:100,
-        borderRadius:3,
-        opacity:0.9
-        
+        height: 100,
+        width: 100,
+        borderRadius: 3,
+        opacity: 0.9
+
     },
     title:
     {
         color: '#FFB400',
-        fontSize:16,
-        fontWeight:600,
-        marginLeft:10,
+        fontSize: 16,
+        fontWeight: 600,
+        marginLeft: 10,
     },
     text:
     {
         fontSize: 14,
-        fontWeight:300,
+        fontWeight: 300,
         marginLeft: 10,
-        width:'49%',
-        opacity:0.7
+        width: '49%',
+        opacity: 0.7
     },
     Voirp:
     {
-        color:'#FFB400',
-        fontSize:14,
-        margin:12
-        
+        color: '#FFB400',
+        fontSize: 14,
+        margin: 12
+
     },
     temps:
     {
-        marginTop:13,
-        fontSize:12,
-        opacity:0.5
+        marginTop: 13,
+        fontSize: 12,
+        opacity: 0.5
     },
     VTI:
     {
-        flexDirection:'row'
+        flexDirection: 'row'
     },
     image2:
     {
-        marginTop:13,
-        width:20,
-        height:20,
-        marginLeft:115,
-        opacity:0.4
+        marginTop: 13,
+        width: 20,
+        height: 20,
+        marginLeft: 115,
+        opacity: 0.4
+
+    },
+    imageActu:
+    {
+        width: 150,
+        height: 200,
+        marginLeft: 20,
+        borderRadius: 5,
+        marginTop: 20,
+        opacity: 0.8,
+        backgroundColor: '#000'
+
+    },
+    ImageText:
+    {
+        width: '90%',
+        marginTop: 145,
+        flexWrap: 'wrap',
+        marginLeft: 15,
+        fontWeight: 600
+    },
+    imageSA:
+    {
+        borderRadius:5,
+        width:380,
+        height:180,
+        marginTop:20,
+        marginLeft:20
+    },
+    imageSuiteActu2 :
+    {
+        width: 200,
+        height: 150,
+        marginLeft: 20,
+        borderRadius: 3,
+        
+       
+    },
+    ImageText2:
+    {
+        marginLeft:20,
+        marginTop:5,
+        width:'90%',
+        flexWrap:'wrap',
+        fontWeight:200,
+    },
+    ImageText3:
+    {
+        marginLeft:20,
+        width:'90%',
+        flexWrap:'wrap',
+        fontWeight:400,
 
     }
+
+
 });
 
 export default Acceuil;

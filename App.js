@@ -9,6 +9,7 @@ import Privacy from "./components/Privacy";
 import Go from "./components/Go";
 import Acceuil from "./components/Acceuil";
 import {initialWindowMetrics, SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
+import VoirPlus from "./components/VoirPlus";
 
 
 const App = () => {
@@ -18,7 +19,7 @@ const App = () => {
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
             <SafeAreaView style={{flex: 1}}>
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName='Acceuil' screenOptions={{headerShown: false}}>
+                    <Stack.Navigator initialRouteName='Go' screenOptions={{headerShown: false}}>
                         <Stack.Screen name="Home" component={Home}/>
                         <Stack.Screen name="Splash" component={Splash}/>
                         <Stack.Screen name="Onboarding" component={Onboarding}/>
@@ -26,6 +27,7 @@ const App = () => {
                         <Stack.Screen name="Privacy" component={Privacy}/>
                         <Stack.Screen name="Go" component={Go}/>
                         <Stack.Screen name="Acceuil" component={Acceuil}/>
+                        <Stack.Screen name="VoirPlus" component={VoirPlus}/>
 
 
                     </Stack.Navigator>
