@@ -1,10 +1,11 @@
 export default [
     {
         
-        bigTitle:'Direct',
+        
         id : '1',
-        title: 'Retrouvez l\' actu en direct',
-        description: 'Suivez l actualité économique mondiale en temps réel avec nos émissions en direct',
+        bigTitle:'Direct',
+        title: 'Retrouvez l\'actualité en direct',
+        description: 'Suivez l\'actualité économique mondiale en temps réel avec nos émissions en direct',
         image: require('./assets/new1.png'),
         lottie: require('./Animation3.json')
         
@@ -19,7 +20,7 @@ export default [
         lottie: require('./Direct.json')
     },
     {
-        bigTitle:'Actu',
+        bigTitle:'L\'Actualité',
         id : '3',
         title: 'Retrouvez l’essentiel de l’actualité',
         description: 'Toute l’actualité financiere et economique en temps reel',
@@ -27,7 +28,7 @@ export default [
         lottie: require('./Animation.json')
     },
     {
-        bigTitle:'Notif',
+        bigTitle:'Notification',
         id : '4',
         title: 'Recevez des notifications',
         description: 'Recevez des notifications en temps réel pour rester informé(e) instantanément',

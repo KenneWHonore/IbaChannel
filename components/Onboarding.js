@@ -36,11 +36,9 @@ export default function Onboarding() {
   return (
     <View style={styles.container}>
       <View style={{ flex: 3 }}>
-      <TouchableOpacity /*onPress={navigation.navigate('Setting')}}*/>
-            <Text style={styles.passer}>Passer</Text>
-            </TouchableOpacity>
         <FlatList data={slide}
-          renderItem={({ item, index }) => <OnboardingItem index={index} currentIndex={currentIndex} item={item} />}
+          renderItem={({ item, index }) =>  <OnboardingItem index={index} currentIndex={currentIndex} item={item} 
+          />}
           horizontal
           showsHorizontalScrollIndicator={false}
           pagingEnabled
@@ -73,14 +71,10 @@ const styles = StyleSheet.create({
       fontSize:16,
       color:'#FFB400',
       fontWeight:400,
-      textAlign: 'right',
-      marginRight:15,
-      Width:60,
+      marginLeft:350,
+      maxWidthWidth:50,
       margin:5,
-     
-      
-
-
+      backgroundColor:'red'
       
   },
 });

@@ -22,13 +22,13 @@ export default Privacy = () => {
             <Text style={[styles.cookiesP, { fontWeight: 300 }]}>certains sont utilisé a des fin statistiques et d’autres sont mis en place par des services tiers. En cliquant sur <Text style={styles.span}>“Accepter tout”</Text> vous acceptez l’utilisations des cookies.</Text>
             <View style={styles.checkContainer}>
                 <Image style={styles.image} source={require('../assets/Check.png')} />
-                <Text style={[styles.check1, { fontWeight: 300 }]}>j’accepte les <Text style={styles.span}>Termes et conditions d’utilisation</Text></Text>
+                <Text style={[styles.check1, { fontWeight: 300 }]}>j’accepte les <Text style={styles.span}>Termes et conditions d’utilisation</Text> de cette application</Text>
             </View>
             <View style={styles.checkContainer2}>
                 <Image style={styles.image} source={require('../assets/Check.png')} />
                 <Text style={[styles.check2, { fontWeight: 300 }]}>je consens a l’utilisation de mes données personnelles. cela nouspermet de collecter des donnéessur la facon dont vous utilisez cette application par diverses technologies, y compris l’emplacement, l’ID de l’appareilet l’adresse IP. Nous faisons celapour créer des statistiques, personnaliser l’experience et notre marketing envers vous. Vouspouvez vous retracter a tout moment en vous rendant surnotre politique de confidentialité</Text>
             </View>
-            <View style={[styles.buttonContainer, { marginTop: 40 }]}>
+            <View style={[styles.buttonContainer, { marginTop: 70 }]}>
                 <TouchableOpacity onPress={() => navigation.navigate('Go')} style={styles.buttonA}>
                     <Text style={styles.buttonText}>accepter tout</Text>
                 </TouchableOpacity>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     },
     cookiesP:
     {
-        marginTop: 20,
+        marginTop: 30,
         marginLeft: 20,
         flexWrap: 'wrap',
         width: '95%',
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     },
     checkContainer:
     {
-        marginTop: 30,
+        marginTop: 50,
         flexDirection: 'row',
         width: '80%',
     },
@@ -104,6 +104,7 @@ const styles = StyleSheet.create({
     {
         flexDirection: 'row',
         width: '75%',
+        marginTop:10,
     },
     check2:
     {
@@ -141,6 +142,7 @@ const styles = StyleSheet.create({
     buttonContainer:
     {
         margin: 20,
+       
 
     }
 

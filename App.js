@@ -19,7 +19,7 @@ const App = () => {
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
             <SafeAreaView style={{flex: 1}}>
                 <NavigationContainer>
-                    <Stack.Navigator initialRouteName='Go' screenOptions={{headerShown: false}}>
+                    <Stack.Navigator initialRouteName='Onboarding' screenOptions={{headerShown: false}}>
                         <Stack.Screen name="Home" component={Home}/>
                         <Stack.Screen name="Splash" component={Splash}/>
                         <Stack.Screen name="Onboarding" component={Onboarding}/>
