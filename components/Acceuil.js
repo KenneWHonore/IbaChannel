@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList } from 'react-native';
 import NextSection from '../NextSection';
 import lePointActu from '../LePointActu';
 import { useNavigation } from '@react-navigation/native';
 import debat from '../debat';
+import Card from './Card';
+
 
 
 const Acceuil = () => {
     const navigation = useNavigation();
+    const [Data, setData] = useState([]);
+    const getData = async () => {
+        const response = await fetch
+            ('https://newsapi.org/v2/everything?q=bitcoin&apiKey=9f25e61949d842acb8faa13bd1f4f6d5');
+        const data = await response.json()
+        setData(data.articles);
+    };
+    useEffect(() => {
+        getData();
+    }, []);
     const handlePress = () => {
         // Navigation vers une autre vue
         navigation.navigate('VoirPlus');
+
     };
 
     return (
@@ -150,8 +163,8 @@ const Acceuil = () => {
                 <TouchableOpacity>
                     <Image style={styles.imageSA} source={require('../assets/suiteActu.jpg')} />
                 </TouchableOpacity>
-                <Text style={{marginLeft:20,opacity:0.8,fontWeight:200}}>Actu</Text>
-                <Text style={{marginLeft:20, marginTop:5}}>France:Emmanuel Macron prend une photo avec les chefs d'etats invite  a occation des JO de paris 2024...</Text>
+                <Text style={{ marginLeft: 20, opacity: 0.8, fontWeight: 200 }}>Actu</Text>
+                <Text style={{ marginLeft: 20, marginTop: 5 }}>France:Emmanuel Macron prend une photo avec les chefs d'etats invite  a occation des JO de paris 2024...</Text>
             </View>
 
             <View style={styles.newSection2}>
@@ -183,33 +196,33 @@ const Acceuil = () => {
 
             </View>
             <View style={styles.suiteActu2}>
-            <FlatList data={debat}
-                        keyExtractor={(item, index) => index.toString()}
+                <FlatList data={debat}
+                    keyExtractor={(item, index) => index.toString()}
 
-                        renderItem={({ item }) => (
-                            <View style={styles.containImage}>
-                                <View>
-                                    <TouchableOpacity>
-                                        <Image source={item.image} style={styles.imageSuiteActu2} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                     <Text style={[styles.ImageText2]}>{item.text}</Text> 
-                                </View>
-                                <Text style={[styles.ImageText3]}>{item.text2}</Text> 
-                                
+                    renderItem={({ item }) => (
+                        <View style={styles.containImage}>
+                            <View>
+                                <TouchableOpacity>
+                                    <Image source={item.image} style={styles.imageSuiteActu2} />
+                                </TouchableOpacity>
                             </View>
-                        )}
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}
-                    />
+                            <View>
+                                <Text style={[styles.ImageText2]}>{item.text}</Text>
+                            </View>
+                            <Text style={[styles.ImageText3]}>{item.text2}</Text>
+
+                        </View>
+                    )}
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                />
             </View>
             <View style={styles.suiteActu}>
                 <TouchableOpacity>
                     <Image style={styles.imageSA} source={require('../assets/suiteActu.jpg')} />
                 </TouchableOpacity>
-                <Text style={{marginLeft:20,opacity:0.8,fontWeight:200}}>Actu</Text>
-                <Text style={{marginLeft:20, marginTop:5}}>France:Emmanuel Macron prend une photo avec les chefs d'etats invite  a occation des JO de paris 2024...</Text>
+                <Text style={{ marginLeft: 20, opacity: 0.8, fontWeight: 200 }}>Actu</Text>
+                <Text style={{ marginLeft: 20, marginTop: 5 }}>France:Emmanuel Macron prend une photo avec les chefs d'etats invite  a occation des JO de paris 2024...</Text>
             </View>
             <View style={styles.newSection3}>
                 <FlatList data={NextSection}
@@ -240,9 +253,20 @@ const Acceuil = () => {
 
             </View>
 
+            <FlatList
+                data={Data}
+                renderItem={({ item }) => {
+                    return (
+                        <Card item={item} />
+                    );
+                }}
+            />
+
         </ScrollView>
+
     );
 };
+
 const deviceWidth = Math.round(Dimensions.get('window').width);
 const raduis = 5;
 const styles = StyleSheet.create({
@@ -332,7 +356,7 @@ const styles = StyleSheet.create({
         margin: 20,
         marginTop: 0,
         //overflow: 'scroll',
-        marginTop:20,
+        marginTop: 20,
     },
     newSection3:
     {
@@ -341,14 +365,15 @@ const styles = StyleSheet.create({
         margin: 20,
         marginTop: 0,
         //overflow: 'scroll',
-        marginTop:20,
+        marginTop: 20,
     },
     image:
     {
         height: 100,
         width: 100,
         borderRadius: 3,
-        opacity: 0.9
+        opacity: 0.9,
+        resizeMode: 'cover'
 
     },
     title:
@@ -413,35 +438,35 @@ const styles = StyleSheet.create({
     },
     imageSA:
     {
-        borderRadius:5,
-        width:380,
-        height:180,
-        marginTop:20,
-        marginLeft:20
+        borderRadius: 5,
+        width: 380,
+        height: 180,
+        marginTop: 20,
+        marginLeft: 20
     },
-    imageSuiteActu2 :
+    imageSuiteActu2:
     {
         width: 200,
         height: 150,
         marginLeft: 20,
         borderRadius: 3,
-        
-       
+
+
     },
     ImageText2:
     {
-        marginLeft:20,
-        marginTop:5,
-        width:'90%',
-        flexWrap:'wrap',
-        fontWeight:200,
+        marginLeft: 20,
+        marginTop: 5,
+        width: '90%',
+        flexWrap: 'wrap',
+        fontWeight: 200,
     },
     ImageText3:
     {
-        marginLeft:20,
-        width:'90%',
-        flexWrap:'wrap',
-        fontWeight:400,
+        marginLeft: 20,
+        width: '90%',
+        flexWrap: 'wrap',
+        fontWeight: 400,
 
     }
 
