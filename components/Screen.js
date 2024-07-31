@@ -1,6 +1,6 @@
 export const SCREENS = {
-    Acceuil: 'Acceuil',
-    Categorie: 'Categorie',
-    Replay: 'Replay',
-    Direct: 'Direct',
-  };
+    acceuil: 'Acceuil',
+    categorie: 'Categorie',
+    replay: 'Replay',
+    direct: 'Direct',
+};
