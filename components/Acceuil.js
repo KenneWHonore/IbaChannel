@@ -38,7 +38,7 @@ const Acceuil = () => {
                         source={require('../assets/IBAlogo.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Image style={[styles.image, { width: 70, height: 30, marginRight: 10, marginTop: -3 }]}
+                    <Image style={[styles.image, { width: 70, height: 30, marginRight: 10, marginTop: -5 }]}
                         source={require('../assets/search.png')} />
                 </TouchableOpacity>
             </View>

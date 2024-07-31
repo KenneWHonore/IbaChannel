@@ -49,22 +49,42 @@ const App = () => {
 
 const TabNavigator = () => {
     return (
-        <Tab.Navigator initialRouteName={SCREENS.acceuil}>
+        <Tab.Navigator 
+        initialRouteName={SCREENS.acceuil} 
+        screenOptions = {
+            {
+                headerShown: false,
+                tabBarStyle:{ 
+                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                    borderTopWidth: 0,
+                    elevation: 0,
+                    shadowOpacity: 0,
+                },
+                tabBarLabelStyle:
+                {
+                    marginBottom:5,
+                    marginTop:-5
+                }
+                
+
+            }
+            }>
             <Tab.Screen name={SCREENS.acceuil}
                         component={Acceuil}
+                        
                         options={{
                             title: 'A la une', tabBarIcon: ({focused}) =>
                                 <Image source={AssetImage.home}
-                                       style={{height: 30, width: 30}}
+                                       style={{height: 60, width: 60}}
                                 />
                         }}
             />
             <Tab.Screen name={SCREENS.categorie}
                         component={Categorie}
                         options={{
-                            title: 'Categorie', tabBarIcon: ({focused}) =>
-                                <Image source={AssetImage.Categorie}
-                                       style={{height: 30, width: 30}}
+                            title: 'Categories', tabBarIcon: ({focused}) =>
+                                <Image source={AssetImage.categorie}
+                                       style={{height: 60, width: 60}}
                                 />
                         }}
             />
@@ -72,8 +92,8 @@ const TabNavigator = () => {
                         component={Replay}
                         options={{
                             title: 'Replay', tabBarIcon: ({focused}) =>
-                                <Image source={AssetImage.Replay}
-                                       style={{height: 30, width: 30}}
+                                <Image source={AssetImage.replay}
+                                       style={{height: 60, width: 60}}
                                 />
                         }}
             />
@@ -82,7 +102,7 @@ const TabNavigator = () => {
                         options={{
                             title: 'Direct', tabBarIcon: ({focused}) =>
                                 <Image source={AssetImage.Direct}
-                                       style={{height: 30, width: 30, opacity: 0.8}}
+                                       style={{height: 50, width: 50, opacity: 0.8,marginTop:-15}}
                                 />
                         }}
             />

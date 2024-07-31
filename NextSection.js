@@ -6,7 +6,7 @@ export default [
         text: 'Reuinion des dirigeants du burkina fasso par rapport a la hausse des prix sanitaire...',
         voirplus: 'Voir plus',
         temps: 'il y a 8 mn',
-        image2: require('./assets/3p.png')
+        image2: require('./assets/3points.png')
     },
     {
         id:'2',
@@ -15,7 +15,7 @@ export default [
         text: 'Le president du burkina faso anonce une reduction sur le prix des cartes nationale...',
         voirplus: 'Voir plus',
         temps: 'il y a 10 mn',
-        image2: require('./assets/3p.png')
+        image2: require('./assets/3points.png')
     },
     {
         id:'3',
@@ -24,7 +24,7 @@ export default [
         text: 'Reuinion des dirigeants du Cameroun par rapport a la hausse des prix sanitaire...',
         voirplus: 'Voir plus',
         temps: 'il y a 15 mn',
-        image2: require('./assets/3p.png')
+        image2: require('./assets/3points.png')
     },
     {
         id:'4',
@@ -33,7 +33,7 @@ export default [
         text: 'Les populations du senegal se plaigne de l augmentation de population en ville...',
         voirplus: 'Voir plus',
         temps: 'il y a 16 mn',
-        image2: require('./assets/3p.png')
+        image2: require('./assets/3points.png')
     },
     {
         id:'5',
@@ -42,6 +42,6 @@ export default [
         text: 'Des travaux de constructions pour la nouvelle route sur qui s eleve a 1,5M de Xaf ...',
         voirplus: 'Voir plus',
         temps: 'il y a 17 mn',
-        image2: require('./assets/3p.png')
+        image2: require('./assets/3points.png')
     },
 ]
