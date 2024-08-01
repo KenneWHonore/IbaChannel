@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import CategorieItem from '../CategorieItem';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Categorie = () => {
+  const navigation = useNavigation();
+  const handlePressSearch = () => {
+    navigation.navigate('Search');
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -14,7 +19,7 @@ const Categorie = () => {
           <Image style={[styles.image, { width: 30, height: 30, marginTop: -4, marginLeft: 20 }]}
             source={require('../assets/IBAlogo.png')} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePressSearch}>
           <Image style={[styles.image, { width: 70, height: 30, marginRight: 10, marginTop: -5 }]}
             source={require('../assets/search.png')} />
         </TouchableOpacity>

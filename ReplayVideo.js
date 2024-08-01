@@ -13,4 +13,18 @@ export default [
         time:'il y\'a 1 jours',
         see:'1,4k',
     },
+    {
+        id:'3',
+        image:require('./assets/replayVideo2.png'),
+        title:'Zimbabwe west Commercial Trading it...',
+        time:'il y\'a 1 jours',
+        see:'1,4k',
+    },
+    {
+        id:'5',
+        image:require('./assets/replayVideo.png'),
+        title:'Cameroun west and Africa Commerce...',
+        time:'il y\'a 2 jours',
+        see:'1,3k',
+    },
 ]

@@ -16,6 +16,7 @@ import Replay from "./components/Replay";
 import Direct from "./components/Direct";
 import AssetImage from "./assets/assetImage";
 import {Image} from "react-native";
+import Search from "./components/Search";
 
 
 const Tab = createBottomTabNavigator();
@@ -37,6 +38,7 @@ const App = () => {
                         <Stack.Screen name="BottomTab" component={TabNavigator}/>
                         {/* <Stack.Screen name="Acceuil" component={Acceuil} /> */}
                         <Stack.Screen name="VoirPlus" component={VoirPlus}/>
+                        <Stack.Screen name="Search" component={Search}/>
 
 
                     </Stack.Navigator>

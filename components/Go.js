@@ -6,7 +6,7 @@ import LottieView from 'lottie-react-native';
 const Go = ({navigation}) => {
     useEffect(() => {
         setTimeout(() => {
-            navigation.navigate('Acceuil');
+            navigation.navigate('BottomTab');
         }, 5000);
     }, []);
 

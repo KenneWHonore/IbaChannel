@@ -8,6 +8,8 @@ import Card from './Card';
 
 
 
+
+
 const Acceuil = () => {
     const navigation = useNavigation();
     const [Data, setData] = useState([]);
@@ -26,6 +28,10 @@ const Acceuil = () => {
 
     };
 
+    const handlePressSearch = () => {
+      navigation.navigate('Search');
+    };
+
     return (
         <ScrollView style={styles.container}
             showsVerticalScrollIndicator={false}>
@@ -37,7 +43,7 @@ const Acceuil = () => {
                     <Image style={[styles.image, { width: 30, height: 30, marginTop: -4, marginLeft: 20 }]}
                         source={require('../assets/IBAlogo.png')} />
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handlePressSearch}>
                     <Image style={[styles.image, { width: 70, height: 30, marginRight: 10, marginTop: -5 }]}
                         source={require('../assets/search.png')} />
                 </TouchableOpacity>
