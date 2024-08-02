@@ -5,6 +5,7 @@ import lePointActu from '../LePointActu';
 import { useNavigation } from '@react-navigation/native';
 import debat from '../debat';
 import Card from './Card';
+import slideAcceuil from '../slideAcceuil';
 
 
 
@@ -22,14 +23,20 @@ const Acceuil = () => {
     useEffect(() => {
         getData();
     }, []);
-    const handlePress = () => {
-        // Navigation vers une autre vue
-        navigation.navigate('VoirPlus');
-
+    const handlePress = (id) => {
+        const element = NextSection.find((el) => el.id === id);
+        navigation.navigate('VoirPlus', { element: element });
     };
-
+    const handlePressVoirPlusA = (id) => {
+        const element = slideAcceuil.find((el) => el.id === id);
+        navigation.navigate('VoirPlusA', { element: element });
+    };
+    const handlePressVoirPlusLePoint = (id) => {
+        const element = lePointActu.find((el) => el.id === id);
+        navigation.navigate('VoirPlusLepoint', { element: element });
+    };
     const handlePressSearch = () => {
-      navigation.navigate('Search');
+        navigation.navigate('Search');
     };
 
     return (
@@ -53,61 +60,34 @@ const Acceuil = () => {
                 <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
                     voir</Text></TouchableOpacity>
             </View>
-            <ScrollView horizontal
-                pagingEnabled
-                showsHorizontalScrollIndicator={false}
-                scrollEventThrottle={100}
-                bounces={false}
-                contentContainerStyle={{ paddingVertical: 10 }}
-                style={{ marginTop: -15, maxHeight: 250 }}
-            >
-                <View style={styles.cardContainer}>
-                    <TouchableOpacity>
-                        <Image style={styles.imageStyle} source={require('../assets/Yaoundé.jpeg')} />
-                    </TouchableOpacity>
-                    <Text style={{ color: '#FFB400', fontWeight: 500, fontSize: 24, margin: 5 }}>Finance <Text
-                        style={{ fontSize: 14, color: '#fff', fontWeight: 400 }}> Aujourd'hui</Text></Text>
-                    <Text style={styles.Descriptions}>Plus de 7,2 milliards pour les travaux de reconstruction a
-                        yaounde</Text>
-                    <View style={styles.end}>
+            <FlatList data={slideAcceuil} keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+
+
+                    <View style={styles.cardContainer}>
                         <TouchableOpacity>
-                            <Text style={{ color: '#FFB400', marginTop: 7, marginLeft: 7, fontSize: 12 }}>Voir plus <Text
-                                style={{ color: '#fff', opacity: 0.7 }}> il y'a 11 min</Text></Text></TouchableOpacity>
-                        <Image style={styles.point} source={require('../assets/3p.png')} />
+                            <Image style={[styles.imageStyle,]} source={item.image} />
+                        </TouchableOpacity>
+                        <Text style={{ color: '#FFB400', fontWeight: 500, fontSize: 24, margin: 5 }}>{item.title}<Text
+                            style={{ fontSize: 14, color: '#fff', fontWeight: 400 }}> {item.date}</Text></Text>
+                        <Text style={styles.Descriptions}>{item.desc}</Text>
+                        <View style={styles.end}>
+                            <TouchableOpacity onPress={() => handlePressVoirPlusA(item.id)}>
+                                <Text style={{ color: '#FFB400', marginTop: 7, marginLeft: 7, fontSize: 12 }}>{item.See}<Text
+                                    style={{ color: '#fff', opacity: 0.7 }}>  {item.time}</Text></Text>
+                            </TouchableOpacity>
+                            <Image style={styles.point} source={require('../assets/3p.png')} />
+
+                        </View>
 
                     </View>
-                </View>
-                <View style={styles.cardContainer}>
-                    <TouchableOpacity>
-                        <Image style={styles.imageStyle} source={require('../assets/abou.jpeg')} />
-                    </TouchableOpacity>
-                    <Text style={{ color: '#FFB400', fontWeight: 500, fontSize: 24, margin: 5 }}>Economie <Text
-                        style={{ fontSize: 14, color: '#fff', fontWeight: 400 }}> Aujourd'hui</Text></Text>
-                    <Text style={styles.Descriptions}>Equipe des lions indomptabledepense 1,4 M pour la sortieau
-                        mondial</Text>
-                    <View style={styles.end}>
-                        <TouchableOpacity>
-                            <Text style={{ color: '#FFB400', marginTop: 7, marginLeft: 7, fontSize: 12 }}>Voir plus <Text
-                                style={{ color: '#fff', opacity: 0.7 }}> il y'a 15 min</Text></Text></TouchableOpacity>
-                        <Image style={styles.point} source={require('../assets/3p.png')} />
-                    </View>
-                </View>
-                <View style={styles.cardContainer}>
-                    <TouchableOpacity>
-                        <Image style={styles.imageStyle} source={require('../assets/Argent.jpeg')} />
-                    </TouchableOpacity>
-                    <Text style={{ color: '#FFB400', fontWeight: 500, fontSize: 24, margin: 5 }}>Economie <Text
-                        style={{ fontSize: 14, color: '#fff', fontWeight: 400 }}> Aujourd'hui</Text></Text>
-                    <Text style={styles.Descriptions}>Penurie de piece de monaiedans les villes du camerounque faire
-                        ?</Text>
-                    <View style={styles.end}>
-                        <TouchableOpacity>
-                            <Text style={{ color: '#FFB400', marginTop: 7, marginLeft: 7, fontSize: 12 }}>Voir plus <Text
-                                style={{ color: '#fff', opacity: 0.7 }}> il y'a 11 min</Text></Text></TouchableOpacity>
-                        <Image style={styles.point} source={require('../assets/3p.png')} />
-                    </View>
-                </View>
-            </ScrollView>
+                )}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                pagingEnabled
+                scrollEventThrottle={16}
+                bounces={false}
+                contentContainerStyle={{ paddingVertical: 10 }} />
             <View style={styles.populaire}>
                 <Text style={{ fontWeight: 600, fontSize: '24' }}>Populaire</Text>
                 <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
@@ -129,7 +109,7 @@ const Acceuil = () => {
                                 <Text style={styles.title}>{item.title}</Text>
                                 <Text style={styles.text}>{item.text}</Text>
                                 <View style={styles.VTI}>
-                                    <TouchableOpacity onPress={handlePress}>
+                                    <TouchableOpacity onPress={() => handlePress(item.id)}>
                                         <Text style={styles.Voirp}>{item.voirplus}</Text>
                                     </TouchableOpacity>
                                     <Text style={styles.temps}>{item.temps}</Text>
@@ -153,7 +133,7 @@ const Acceuil = () => {
                         renderItem={({ item }) => (
                             <View style={styles.containImage}>
                                 <View style={{ position: 'relative' }}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint(item.id)}>
                                         <Image source={item.image} style={styles.imageActu} filter="grayscale(0.5)" />
                                         <Text style={[styles.ImageText, { position: 'absolute', top: 10, left: 10, fontSize: 16, color: '#fff' }]}>{item.text}</Text>
                                     </TouchableOpacity>
@@ -166,7 +146,7 @@ const Acceuil = () => {
                 </View>
             </View>
             <View style={styles.suiteActu}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handlePress(item.id)}>
                     <Image style={styles.imageSA} source={require('../assets/suiteActu.jpg')} />
                 </TouchableOpacity>
                 <Text style={{ marginLeft: 20, opacity: 0.8, fontWeight: 200 }}>Actu</Text>
@@ -188,7 +168,7 @@ const Acceuil = () => {
                                 <Text style={styles.title}>{item.title}</Text>
                                 <Text style={styles.text}>{item.text}</Text>
                                 <View style={styles.VTI}>
-                                    <TouchableOpacity onPress={handlePress}>
+                                    <TouchableOpacity onPress={() => handlePress(item.id)}>
                                         <Text style={styles.Voirp}>{item.voirplus}</Text>
                                     </TouchableOpacity>
                                     <Text style={styles.temps}>{item.temps}</Text>
@@ -319,6 +299,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 5,
         elevation: 9,
+        marginTop: -10
     },
     imageStyle:
     {

@@ -17,13 +17,24 @@ import Direct from "./components/Direct";
 import AssetImage from "./assets/assetImage";
 import {Image} from "react-native";
 import Search from "./components/Search";
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import {SCREENSDrawner} from "./components/ScreenDrawner"
+import APropos from "./components/Apropos";
+import TermeCondition from "./components/TermeCondition";
+import Partager from "./components/Partager";
+import VoirPlusA from "./components/VoirPlusA";
+import VoirPlusLepoint from "./components/VoirPlusLepoint";
+
+
 
 
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const App = () => {
 
     const Stack = createNativeStackNavigator();
+    
 
     return (
         <SafeAreaProvider initialMetrics={initialWindowMetrics}>
@@ -39,6 +50,9 @@ const App = () => {
                         {/* <Stack.Screen name="Acceuil" component={Acceuil} /> */}
                         <Stack.Screen name="VoirPlus" component={VoirPlus}/>
                         <Stack.Screen name="Search" component={Search}/>
+                        <Stack.Screen name="VoirPlusA" component={VoirPlusA}/>
+                        <Stack.Screen name="VoirPlusLepoint" component={VoirPlusLepoint}/>
+                        
 
 
                     </Stack.Navigator>
@@ -111,6 +125,25 @@ const TabNavigator = () => {
         </Tab.Navigator>
     );
 }
+
+
+const Drawner = () =>{
+    return(
+        <NavigationContainer>
+            <Drawer.Navigator initialRouteName={SCREENS.acceuil}>
+                <Drawer.SCREENSDrawner name={SCREENSDrawner.aProps} component={APropos} options={{title:'A propos'}}/>
+                <Drawer.SCREENSDrawner name={SCREENSDrawner.termeCondition} component={TermeCondition} options={{title:'Terme et Condition'}}/>
+                <Drawer.SCREENSDrawner name={SCREENSDrawner.partager} component={Partager} options={{title:'Partager'}}/>
+                <Drawer.SCREENSDrawner name={SCREENSDrawner.parametre} component={Setting} options={{title:'Parametre'}}/>
+
+                
+            </Drawer.Navigator>
+        </NavigationContainer>
+    )
+}
+
+
+
 
 export default App;
 
