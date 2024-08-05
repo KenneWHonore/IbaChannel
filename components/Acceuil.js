@@ -6,30 +6,78 @@ import { useNavigation } from '@react-navigation/native';
 import debat from '../debat';
 import Card from './Card';
 import slideAcceuil from '../slideAcceuil';
+import { decode } from 'html-entities';
+import moment from 'moment';
+import 'moment/locale/fr';
 
 
 
+const getImage = (post, imageSize = 'medium') => {
+    // Ensure post is defined
+    if (!post) {
+        return '';
+    }
 
+    // Try to find an image using the `better_featured_image` property
+    if (post.better_featured_image && post.better_featured_image.source_url) {
+        return post.better_featured_image.source_url;
+    }
 
-const Acceuil = () => {
+    // If not found, try the `_embedded` property
+    if (post._embedded && post._embedded['wp:featuredmedia']) {
+        const media = post._embedded['wp:featuredmedia'][0];
+        if (media && media.media_details && media.media_details.sizes[imageSize]) {
+            return media.media_details.sizes[imageSize].source_url;
+        }
+    }
+
+    // If no image is found, return an empty string or a placeholder
+    return ''; // Or you can return Images.image_placeholder if you have it defined
+};
+
+const Acceuil = (item) => {
+    const imageUrl = getImage(item, 'medium');
+    moment.locale('fr');
     const navigation = useNavigation();
     const [Data, setData] = useState([]);
+    const [popularPosts, setPopularPosts] = useState([]);
+    const [PointActu, setPointActu] = useState([]);
+    const [PointActu2, setPointActu2] = useState([]);
+    console.log(popularPosts);
+    const [loading, setLoading] = useState(true);
     const getData = async () => {
-        const response = await fetch
-            ('https://newsapi.org/v2/everything?q=bitcoin&apiKey=9f25e61949d842acb8faa13bd1f4f6d5');
-        const data = await response.json()
-        setData(data.articles);
+        const response = await fetch('https://afriquemedia.tv/wp-json/wp/v2/posts');
+        const data = await response.json();
+        setData(data);
+        setLoading(true);
     };
+    const getPopularPosts = async () => {
+        const response = await fetch(`https://afriquemedia.tv/wp-json/wp/v2/posts?offset=10&per_page=10`);
+        const data = await response.json();
+        setPopularPosts(data);
+    };
+    const getPointActu = async () => {
+        const response = await fetch(`https://afriquemedia.tv/wp-json/wp/v2/posts?offset=20&per_page=10`);
+        const data = await response.json();
+        setPointActu(data);
+    };
+    const getPointActu2 = async () => {
+        const response = await fetch(`https://afriquemedia.tv/wp-json/wp/v2/posts?offset=30&per_page=10`);
+        const data = await response.json();
+        setPointActu2(data);
+    }
     useEffect(() => {
         getData();
+        getPopularPosts();
+        getPointActu();
+        getPointActu2();
     }, []);
     const handlePress = (id) => {
         const element = NextSection.find((el) => el.id === id);
         navigation.navigate('VoirPlus', { element: element });
     };
-    const handlePressVoirPlusA = (id) => {
-        const element = slideAcceuil.find((el) => el.id === id);
-        navigation.navigate('VoirPlusA', { element: element });
+    const handlePressVoirPlusA = (item) => {
+        navigation.navigate('VoirPlusA', { item: item });
     };
     const handlePressVoirPlusLePoint = (id) => {
         const element = lePointActu.find((el) => el.id === id);
@@ -60,34 +108,38 @@ const Acceuil = () => {
                 <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
                     voir</Text></TouchableOpacity>
             </View>
-            <FlatList data={slideAcceuil} keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item }) => (
-
-
-                    <View style={styles.cardContainer}>
-                        <TouchableOpacity>
-                            <Image style={[styles.imageStyle,]} source={item.image} />
+            <FlatList data={Data} keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
+                <View style={styles.cardContainer}>
+                    <TouchableOpacity>
+                        {getImage(item, 'medium') ? (
+                            <Image
+                                style={[styles.imageStyle, { resizeMode: 'cover' }]}
+                                source={{ uri: getImage(item, 'medium') }}
+                            />
+                        ) : (
+                            <View style={[styles.imageStyle, { backgroundColor: 'lightgray' }]} />
+                        )}
+                    </TouchableOpacity>
+                    <Text style={{ color: '#FFB400', fontWeight: 500, fontSize: 18, margin: 5 }}>{decode(item.title.rendered).substring(0, 70) + '...'}</Text>
+                    <View style={[styles.end, { position: 'absolute', bottom: 0, right: 0 }]}>
+                        <TouchableOpacity onPress={() => handlePressVoirPlusA(item.id)}>
+                            <Text style={{ color: '#FFB400', marginTop: 7, marginLeft: 7, fontSize: 12, right: 180 }}>Lire plus   <Text style={{ color: '#fff', opacity: 0.7 }}>
+                                {moment(item.date).fromNow()}
+                            </Text></Text>
                         </TouchableOpacity>
-                        <Text style={{ color: '#FFB400', fontWeight: 500, fontSize: 24, margin: 5 }}>{item.title}<Text
-                            style={{ fontSize: 14, color: '#fff', fontWeight: 400 }}> {item.date}</Text></Text>
-                        <Text style={styles.Descriptions}>{item.desc}</Text>
-                        <View style={styles.end}>
-                            <TouchableOpacity onPress={() => handlePressVoirPlusA(item.id)}>
-                                <Text style={{ color: '#FFB400', marginTop: 7, marginLeft: 7, fontSize: 12 }}>{item.See}<Text
-                                    style={{ color: '#fff', opacity: 0.7 }}>  {item.time}</Text></Text>
-                            </TouchableOpacity>
-                            <Image style={styles.point} source={require('../assets/3p.png')} />
-
-                        </View>
+                        <Image style={styles.point} source={require('../assets/3p.png')} />
 
                     </View>
-                )}
+
+                </View>
+            )}
                 horizontal
                 showsHorizontalScrollIndicator={false}
                 pagingEnabled
-                scrollEventThrottle={16}
-                bounces={false}
-                contentContainerStyle={{ paddingVertical: 10 }} />
+                scrollEventThrottle={10}
+                bounces={true}
+                contentContainerStyle={{ paddingVertical: 10 }}
+                snapToInterval={'center'} />
             <View style={styles.populaire}>
                 <Text style={{ fontWeight: 600, fontSize: '24' }}>Populaire</Text>
                 <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
@@ -95,7 +147,7 @@ const Acceuil = () => {
             </View>
 
             <View style={styles.newSection}>
-                <FlatList data={NextSection}
+                <FlatList data={popularPosts}
                     keyExtractor={(item, index) => index.toString()}
 
                     renderItem={({ item }) => (
@@ -103,17 +155,24 @@ const Acceuil = () => {
 
                         <View style={[styles.CardSection, { marginBottom: 15 }]}>
                             <TouchableOpacity>
-                                <Image source={item.image} style={styles.image} />
+                                {getImage(item, 'medium') ? (
+                                    <Image
+                                        style={[styles.image, { resizeMode: 'cover' }]}
+                                        source={{ uri: getImage(item, 'medium') }}
+                                    />
+                                ) : (
+                                    <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                )}
                             </TouchableOpacity>
                             <View>
-                                <Text style={styles.title}>{item.title}</Text>
-                                <Text style={styles.text}>{item.text}</Text>
+                                <Text style={styles.title}>Actu</Text>
+                                <Text style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
                                 <View style={styles.VTI}>
                                     <TouchableOpacity onPress={() => handlePress(item.id)}>
-                                        <Text style={styles.Voirp}>{item.voirplus}</Text>
+                                        <Text style={styles.Voirp}>Lire plus</Text>
                                     </TouchableOpacity>
-                                    <Text style={styles.temps}>{item.temps}</Text>
-                                    <Image source={item.image2} style={styles.image2} />
+                                    <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
+                                    <Image source={require('../assets/3points.png')} style={styles.image2} />
 
                                 </View>
                             </View>
@@ -127,15 +186,22 @@ const Acceuil = () => {
                     <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 20 }}>Le point sur l'actualité</Text>
                 </View>
                 <View style={styles.Contain}>
-                    <FlatList data={lePointActu}
+                    <FlatList data={PointActu}
                         keyExtractor={(item, index) => index.toString()}
 
                         renderItem={({ item }) => (
                             <View style={styles.containImage}>
                                 <View style={{ position: 'relative' }}>
                                     <TouchableOpacity onPress={() => handlePressVoirPlusLePoint(item.id)}>
-                                        <Image source={item.image} style={styles.imageActu} filter="grayscale(0.5)" />
-                                        <Text style={[styles.ImageText, { position: 'absolute', top: 10, left: 10, fontSize: 16, color: '#fff' }]}>{item.text}</Text>
+                                        {getImage(item, 'medium') ? (
+                                            <Image
+                                                style={[styles.imageActu, filter="grayscale(0.5)", { resizeMode: 'cover', }]}
+                                                source={{ uri: getImage(item, 'medium') }}
+                                            />
+                                        ) : (
+                                            <View style={[styles.imageActu, filter="grayscale(0.5)", { backgroundColor: 'lightgray' }]} />
+                                        )}
+                                        <Text style={[styles.ImageText, { position: 'absolute', top: 10, left: 10, fontSize: 16, color: '#fff' }]}>{decode(item.title.rendered).substring(0, 40) + '...'}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -154,7 +220,7 @@ const Acceuil = () => {
             </View>
 
             <View style={styles.newSection2}>
-                <FlatList data={NextSection}
+            <FlatList data={PointActu2}
                     keyExtractor={(item, index) => index.toString()}
 
                     renderItem={({ item }) => (
@@ -162,17 +228,24 @@ const Acceuil = () => {
 
                         <View style={[styles.CardSection, { marginBottom: 15 }]}>
                             <TouchableOpacity>
-                                <Image source={item.image} style={styles.image} />
+                                {getImage(item, 'medium') ? (
+                                    <Image
+                                        style={[styles.image, { resizeMode: 'cover' }]}
+                                        source={{ uri: getImage(item, 'medium') }}
+                                    />
+                                ) : (
+                                    <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                )}
                             </TouchableOpacity>
                             <View>
-                                <Text style={styles.title}>{item.title}</Text>
-                                <Text style={styles.text}>{item.text}</Text>
+                                <Text style={styles.title}>Actu</Text>
+                                <Text style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
                                 <View style={styles.VTI}>
                                     <TouchableOpacity onPress={() => handlePress(item.id)}>
-                                        <Text style={styles.Voirp}>{item.voirplus}</Text>
+                                        <Text style={styles.Voirp}>Lire plus</Text>
                                     </TouchableOpacity>
-                                    <Text style={styles.temps}>{item.temps}</Text>
-                                    <Image source={item.image2} style={styles.image2} />
+                                    <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
+                                    <Image source={require('../assets/3points.png')} style={styles.image2} />
 
                                 </View>
                             </View>
@@ -375,7 +448,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 300,
         marginLeft: 10,
-        width: '49%',
+        width: '75%',
         opacity: 0.7
     },
     Voirp:

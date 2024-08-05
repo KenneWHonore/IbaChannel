@@ -9,7 +9,7 @@ import LePointActu from '../LePointActu';
 const VoirPlusA = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { id, element } = route.params;
+    const { item } = route.params;
 
 
 
@@ -18,18 +18,18 @@ const VoirPlusA = () => {
         <ScrollView style={styles.container}
         showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Image source={element.image} style={{ width: '100%', height: 300 }} />
+            <Image source={item.image} style={{ width: '100%', height: 300 }} />
             <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonAbsolute} activeOpacity={0.6}>
               <AntDesign name="arrowleft" size={32} color="#FFB400" />
             </TouchableOpacity>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.title}>{element.title}</Text>
-            <Text style={{ marginTop: 19, opacity: 0.7, fontSize: 12, fontWeight: 300 }}>{element.temps}</Text>
+            <Text style={styles.title}>{item.title}</Text>
+            <Text style={{ marginTop: 19, opacity: 0.7, fontSize: 12, fontWeight: 300 }}>{item.temps}</Text>
           </View>
-          <Text style={{ marginLeft: 12 }}>{element.desc}</Text>
+          <Text style={{ marginLeft: 12 }}>{item.desc}</Text>
           <View>
-            <Text style={{ marginLeft: 12, marginTop: 10, width: '95%', fontSize: 16, fontWeight: 300 }}>{element.text3}</Text>
+            <Text style={{ marginLeft: 12, marginTop: 10, width: '95%', fontSize: 16, fontWeight: 300 }}>{item.text3}</Text>
           </View>
           <View style={styles.Contain}>
             <Text style={{marginLeft: 12,fontSize: 24, marginTop: 20,}}>Articles similaire</Text>
