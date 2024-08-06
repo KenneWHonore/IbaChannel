@@ -24,6 +24,9 @@ import TermeCondition from "./components/TermeCondition";
 import Partager from "./components/Partager";
 import VoirPlusA from "./components/VoirPlusA";
 import VoirPlusLepoint from "./components/VoirPlusLepoint";
+import VoirPlusLePoint2 from "./components/VoirPlusLePoint2";
+import VoirPlusLePoint3 from "./components/VoirPlusLepoint3";
+import VoirPlusLepoint4 from "./components/VoirPlusLepoint4";
 
 
 
@@ -52,6 +55,9 @@ const App = () => {
                         <Stack.Screen name="Search" component={Search}/>
                         <Stack.Screen name="VoirPlusA" component={VoirPlusA}/>
                         <Stack.Screen name="VoirPlusLepoint" component={VoirPlusLepoint}/>
+                        <Stack.Screen name="VoirPlusLepoint2" component={VoirPlusLePoint2}/>
+                        <Stack.Screen name="VoirPlusLepoint3" component={VoirPlusLePoint3}/>
+                        <Stack.Screen name="VoirPlusLepoint4" component={VoirPlusLepoint4}/>
                         
 
 
@@ -127,20 +133,7 @@ const TabNavigator = () => {
 }
 
 
-const Drawner = () =>{
-    return(
-        <NavigationContainer>
-            <Drawer.Navigator initialRouteName={SCREENS.acceuil}>
-                <Drawer.SCREENSDrawner name={SCREENSDrawner.aProps} component={APropos} options={{title:'A propos'}}/>
-                <Drawer.SCREENSDrawner name={SCREENSDrawner.termeCondition} component={TermeCondition} options={{title:'Terme et Condition'}}/>
-                <Drawer.SCREENSDrawner name={SCREENSDrawner.partager} component={Partager} options={{title:'Partager'}}/>
-                <Drawer.SCREENSDrawner name={SCREENSDrawner.parametre} component={Setting} options={{title:'Parametre'}}/>
 
-                
-            </Drawer.Navigator>
-        </NavigationContainer>
-    )
-}
 
 
 

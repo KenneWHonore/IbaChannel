@@ -9,7 +9,8 @@ import moment from 'moment';
 
 
 
-const VoirPlusA = () => {
+
+const VoirPlusLePoint2 = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const {item} = route.params;
@@ -121,4 +122,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default VoirPlusA;
+export default VoirPlusLePoint2;

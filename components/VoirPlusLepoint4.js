@@ -3,14 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList, 
 import { AntDesign } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getImage } from "./Acceuil";
-import {decode} from "html-entities";
+import { decode } from "html-entities";
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 
 
 
-
-const VoirPlus = () => {
+const VoirPlusLepoint4 = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { item } = route.params;
@@ -41,34 +40,7 @@ const VoirPlus = () => {
           flexWrap: 'wrap',
         }}><HTMLView value={decode(item.content.rendered)} css={{ p: { textAlign: 'justify', } }} /></Text>
       </View>
-      {/* <View style={{ flexDirection: "row" }}>
-        <Text style={styles.title}>{element.title}</Text>
-        <Text style={{ marginTop: 19, opacity: 0.7, fontSize: 12, fontWeight: 300 }}>{element.temps}</Text>
-      </View>
-      <Text style={{ marginLeft: 12 }}>{element.text2}</Text>
-      <View>
-        <Text style={{ marginLeft: 12, marginTop: 10, width: '95%', fontSize: 16, fontWeight: 300 }}>{element.text3}</Text>
-      </View>
-      <View style={styles.Contain}>
-        <Text style={{marginLeft: 12,fontSize: 24, marginTop: 20,}}>Articles similaire</Text>
-        <FlatList data={LePointActu}
-          keyExtractor={(item, index) => index.toString()}
 
-          renderItem={({ item }) => (
-            <View style={styles.containImage}>
-              <View style={{ position: 'relative' }}>
-                <TouchableOpacity>
-                  <Image source={item.image} style={styles.imageActu} filter="grayscale(0.5)" />
-                  <Text style={[styles.ImageText, { position: 'absolute', top: 10, left: 10, fontSize: 16, color: '#fff' }]}>{item.text}</Text>
-                </TouchableOpacity>
-              </View>
-              
-            </View>
-          )}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View> */}
     </ScrollView>
   );
 };
@@ -85,10 +57,6 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'relative',
 
-  },
-  image:
-  {
-    width: screenWidth,
   },
   button: {
     padding: 10,
@@ -111,6 +79,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 9,
   },
+  image:
+  {
+    width: screenWidth,
+  },
   title:
   {
     color: '#FFB400',
@@ -120,6 +92,7 @@ const styles = StyleSheet.create({
 
 
   },
+
   imageActu:
   {
     width: 150,
@@ -142,8 +115,8 @@ const styles = StyleSheet.create({
   },
   date:
   {
-      marginLeft:15,
+    marginLeft: 15,
   },
 });
 
-export default VoirPlus;
+export default VoirPlusLepoint4;

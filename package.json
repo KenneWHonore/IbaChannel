@@ -25,6 +25,7 @@
     "react-native-animatable": "^1.4.0",
     "react-native-elements": "^3.4.3",
     "react-native-grid-component": "^2.0.1",
+    "react-native-htmlview": "^0.17.0",
     "react-native-inviewport": "^1.1.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-reanimated": "~3.10.1",
