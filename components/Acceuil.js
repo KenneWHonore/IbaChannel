@@ -40,7 +40,6 @@ const Acceuil = (item) => {
     const [PointActu2, setPointActu2] = useState([]);
     const [PointActu3, setPointActu3] = useState([]);
     const [PointActu4, setPointActu4] = useState([]);
-    console.log(popularPosts);
     const [loading, setLoading] = useState(true);
     const getData = async () => {
         const response = await fetch('https://afriquemedia.tv/wp-json/wp/v2/posts');
@@ -105,7 +104,7 @@ const Acceuil = (item) => {
     const handlePressSearch = () => {
         navigation.navigate('Search');
     };
-   
+
 
 
 
@@ -199,7 +198,11 @@ const Acceuil = (item) => {
                             )}
                         </TouchableOpacity>
                         <View>
-                            <Text style={styles.title}>Actu</Text>
+                            <View style={styles.categories}>
+                                {item.categories?.map((category) => (
+                                    <Text key={category.id} style={styles.title}>{category.name}</Text>
+                                ))}
+                            </View>
                             <Text
                                 style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
                             <View style={styles.VTI}>
@@ -208,9 +211,9 @@ const Acceuil = (item) => {
                                 </TouchableOpacity>
                                 <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
                                 <Image source={require('../assets/3points.png')} style={styles.image2} />
-
                             </View>
                         </View>
+                        <View style={{ borderBottomWidth: 1, borderBottomColor: '#ccc', marginBottom: 20, marginRight: 25 }} />
                     </View>
                 ))}
 
@@ -221,31 +224,41 @@ const Acceuil = (item) => {
                 </View>
                 <View style={styles.Contain}>
 
-                    {PointActu.map((item, index) => (
+                    <FlatList data={PointActu} nestedScrollEnabled
+                        keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
 
-                        <View key={index} style={styles.containImage}>
-                            <View style={{ position: 'relative' }}>
-                                <TouchableOpacity onPress={() => handlePressVoirPlusLePoint(item)}>
-                                    {getImage(item, 'medium') ? (
-                                        <Image
-                                            style={[styles.imageActu, filter = "grayscale(0.5)", { resizeMode: 'cover', }]}
-                                            source={{ uri: getImage(item, 'medium') }}
-                                        />
-                                    ) : (
-                                        <View
-                                            style={[styles.imageActu, filter = "grayscale(0.5)", { backgroundColor: 'lightgray' }]} />
-                                    )}
-                                    <Text style={[styles.ImageText, {
-                                        position: 'absolute',
-                                        top: 10,
-                                        left: 10,
-                                        fontSize: 16,
-                                        color: '#fff'
-                                    }]}>{decode(item.title.rendered).substring(0, 39) + '...'}</Text>
-                                </TouchableOpacity>
+                            <View style={styles.containImage}>
+                                <View style={{ position: 'relative' }}>
+                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint(item)}>
+                                        {getImage(item, 'medium') ? (
+                                            <Image
+                                                style={[styles.imageActu, filter = "grayscale(0.5)", { resizeMode: 'cover', }]}
+                                                source={{ uri: getImage(item, 'medium') }}
+                                            />
+                                        ) : (
+                                            <View
+                                                style={[styles.imageActu, filter = "grayscale(0.5)", { backgroundColor: 'lightgray' }]} />
+                                        )}
+                                        <Text style={[styles.ImageText, {
+                                            position: 'absolute',
+                                            top: 10,
+                                            left: 10,
+                                            fontSize: 16,
+                                            color: '#fff'
+                                        }]}>{decode(item.title.rendered).substring(0, 39) + '...'}</Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                        </View>
-                    ))}
+
+                        )}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        pagingEnabled
+                        scrollEventThrottle={10}
+                        bounces={true}
+                        contentContainerStyle={{ paddingVertical: 10, paddingRight: 10 }}
+                        snapToInterval={'center'}
+                    />
 
                 </View>
 
@@ -547,14 +560,16 @@ const styles = StyleSheet.create({
     {
         color: '#FFB400',
         fontSize: 14,
-        margin: 12
+        margin: 12,
+        marginTop: 25
 
     },
     temps:
     {
         marginTop: 13,
         fontSize: 12,
-        opacity: 0.5
+        opacity: 0.5,
+        marginTop: 25
     },
     VTI:
     {
@@ -565,7 +580,8 @@ const styles = StyleSheet.create({
         marginTop: 13,
         width: 20,
         height: 20,
-        marginLeft: 115,
+        marginLeft: 110,
+        marginTop: 25,
         opacity: 0.4
 
     },
