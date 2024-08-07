@@ -1,12 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
 import ReplayVideo from '../ReplayVideo';
 import ShortReplay from '../ShortReplay';
 import DernierVideo from '../DernierVideo';
 import NosEmission from '../NosEmission';
 import { useNavigation } from '@react-navigation/native';
+import { decode } from 'html-entities';
+import moment from 'moment';
+import 'moment/locale/fr';
+
+
+
+const API_KEY = 'AIzaSyAQvzvN_7BJNVEZEHqEIFu-8D04UPt2_Mg';
+const CHANNEL_ID = 'UCNt10XGfyfzeuVVas-13iXQ';
 
 const Replay = () => {
+  const [videos, setVideos] = useState([]);
+  const [videoStats, setVideoStats] = useState({});
+
+  useEffect(() => {
+    fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&maxResults=20&order=date&key=${API_KEY}`)
+      .then(response => response.json())
+      .then(data => setVideos(data.items));
+  }, []);
+
+  useEffect(() => {
+    if (videos.length > 0) {
+      const videoIds = videos.map(item => item.id.videoId);
+      fetch(`https://www.googleapis.com/youtube/v3/videos?part=statistics&id=${videoIds.join(',')}&key=${API_KEY}`)
+        .then(response => response.json())
+        .then(data => {
+          const stats = data.items.reduce((acc, item) => {
+            acc[item.id] = item.statistics;
+            return acc;
+          }, {});
+          setVideoStats(stats);
+        });
+    }
+  }, [videos]);
   const navigation = useNavigation();
   const handlePressSearch = () => {
     navigation.navigate('Search');
@@ -28,7 +59,29 @@ const Replay = () => {
             source={require('../assets/search.png')} />
         </TouchableOpacity>
       </View>
-
+      <View>
+        <FlatList
+          data={videos}
+          keyExtractor={(item) => item.id.videoId}
+          renderItem={({ item }) => (
+            <TouchableOpacity>
+              <View>
+                <Image
+                  style={{ width: 120, height: 90, borderRadius: 10 }}
+                  source={{ uri: item.snippet.thumbnails.high.url }}
+                />
+                <Text>{decode(item.snippet.title)}</Text>
+                <Text style={{ color: '#666', opacity: 0.7 }}>
+                  {moment(item.snippet.publishTime).fromNow()}
+                </Text>
+                <Text style={{ color: '#666', opacity: 0.7 }}>
+                  {videoStats[item.id.videoId] && videoStats[item.id.videoId].viewCount} vues
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
       <View style={styles.Replay}>
         <FlatList
           horizontal

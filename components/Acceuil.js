@@ -104,6 +104,7 @@ const Acceuil = (item) => {
     const handlePressSearch = () => {
         navigation.navigate('Search');
     };
+    
 
 
 
@@ -177,7 +178,8 @@ const Acceuil = (item) => {
                 scrollEventThrottle={10}
                 bounces={true}
                 contentContainerStyle={{ paddingVertical: 10, paddingRight: 10 }}
-                snapToInterval={'center'} />
+                snapToInterval={'center'} 
+                />
             <View style={styles.populaire}>
                 <Text style={{ fontWeight: 600, fontSize: '24' }}>Populaire</Text>
                 <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
@@ -199,12 +201,15 @@ const Acceuil = (item) => {
                         </TouchableOpacity>
                         <View>
                             <View style={styles.categories}>
-                                {item.categories?.map((category) => (
-                                    <Text key={category.id} style={styles.title}>{category.name}</Text>
-                                ))}
+
+                                {item._embedded && item._embedded['wp:term'] &&
+                                    item._embedded['wp:term'][0].map((category, index) => (
+                                        <Text key={index} style={styles.title}>{category.name}</Text>
+                                    ))
+                                }
+                                <Text key={index} style={styles.title}>Actu</Text>
                             </View>
-                            <Text
-                                style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
+                            <Text style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
                             <View style={styles.VTI}>
                                 <TouchableOpacity onPress={() => handlePress(item)}>
                                     <Text style={styles.Voirp}>Lire plus</Text>
@@ -224,7 +229,8 @@ const Acceuil = (item) => {
                 </View>
                 <View style={styles.Contain}>
 
-                    <FlatList data={PointActu} nestedScrollEnabled
+                    <FlatList data={PointActu} 
+                    nestedScrollEnabled
                         keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
 
                             <View style={styles.containImage}>
@@ -446,6 +452,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         margin: 20,
+    },
+    categories:
+    {
+        
     },
     AT: {
         flexDirection: 'row',
