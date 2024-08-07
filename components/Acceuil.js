@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { decode } from 'html-entities';
 import moment from 'moment';
 import 'moment/locale/fr';
-import InView from 'react-native-inviewport';
+
 
 
 export const getImage = (post, imageSize = 'medium') => {
@@ -105,17 +105,9 @@ const Acceuil = (item) => {
     const handlePressSearch = () => {
         navigation.navigate('Search');
     };
-    useEffect(() => {
-        loadData(page);
-    }, [page]);
+   
 
-    const loadData = async (page) => {
-        setLoading(true);
-        const response = await fetch(`https://afriquemedia.tv/wp-json/wp/v2/posts?page=${page}`);
-        const data = await response.json();
-        setData((prevData) => [...prevData, ...data]);
-        setLoading(false);
-    };
+
 
     return (
         <ScrollView style={styles.container}
@@ -406,7 +398,7 @@ const Acceuil = (item) => {
                                         <Text
                                             style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
                                         <View style={styles.VTI}>
-                                            <TouchableOpacity onPress={() => handlePressVoirPlusLePoint3(item)}>
+                                            <TouchableOpacity onPress={() => handlePressVoirPlusLePoint4(item)}>
                                                 <Text style={styles.Voirp}>Lire plus</Text>
                                             </TouchableOpacity>
                                             <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
