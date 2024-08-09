@@ -250,8 +250,11 @@ const Acceuil = (item) => {
                                             top: 10,
                                             left: 10,
                                             fontSize: 16,
-                                            color: '#fff'
-                                        }]}>{decode(item.title.rendered).substring(0, 39) + '...'}</Text>
+                                            color: '#fff',
+                                            backgroundColor:'rgba(0, 0, 0, 0.2)',
+                                            backdropFilter: 'blur(10px)',
+                                            paddingLeft:2
+                                        }]}>{decode(item.title.rendered).substring(0, 35) + '...'}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
