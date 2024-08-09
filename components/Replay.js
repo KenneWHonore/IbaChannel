@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, FlatList, ScrollView } from 'react-native';
-import ReplayVideo from '../ReplayVideo';
 import ShortReplay from '../ShortReplay';
-import DernierVideo from '../DernierVideo';
-import NosEmission from '../NosEmission';
 import { useNavigation } from '@react-navigation/native';
 import { decode } from 'html-entities';
 import moment from 'moment';
@@ -55,7 +52,7 @@ const Replay = () => {
       .then(data => setVideos2(data.items));
   }, []);
   useEffect(() => {
-    fetch(`https://www.googleapis.com/youtube/v3/playlists?part=id,snippet&channelId=${CHANNEL_ID}&maxResults=10&key=${API_KEY}`)
+    fetch(`https://www.googleapis.com/youtube/v3/playlists?part=id,snippet&channelId=${CHANNEL_ID}&maxResults=7&key=${API_KEY}`)
       .then(response => response.json())
       .then(data => setVideos3(data.items));
   }, []);
@@ -194,7 +191,7 @@ const Replay = () => {
               <TouchableOpacity>
                 <Image style={styles.imageSA} source={{ uri: item.snippet.thumbnails.high.url }} />
               </TouchableOpacity>
-              <Text style={{ marginLeft: 25, opacity: 0.8, fontWeight: 300, fontSize: 16, marginTop: 5 }}>{decode(item.snippet.title).substring(0, 55) + '...'}</Text>
+              <Text style={{ marginLeft: 25, opacity: 0.8, fontWeight: 300, fontSize: 16, marginTop: 1, paddingVertical:10 }}>{decode(item.snippet.title).substring(0, 55) + '...'}</Text>
             </View>
           )}
         />
@@ -346,7 +343,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     width: 380,
     height: 150,
-    marginTop: 10,
+    marginTop: -5,
     marginLeft: 20
   },
   NosFormationCard:
