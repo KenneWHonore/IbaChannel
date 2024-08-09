@@ -1,12 +1,11 @@
 import React from 'react';
-import {Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, Dimensions} from 'react-native';
+import {Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {AntDesign} from '@expo/vector-icons';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {getImage} from "./Acceuil";
 import {decode} from "html-entities";
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
-
 
 
 const VoirPlusA = () => {
@@ -18,9 +17,9 @@ const VoirPlusA = () => {
     return (
         <ScrollView style={styles.container}
                     showsVerticalScrollIndicator={false}
-                    contentContainerStyle={{paddingEnd:10}}>
+                    contentContainerStyle={{paddingEnd: 10}}>
             <View style={styles.header}>
-                <Image source={{uri: getImage(item)}} style={[styles.image,{height: 300}]}/>
+                <Image source={{uri: getImage(item)}} style={[styles.image, {height: 300}]}/>
                 <TouchableOpacity onPress={() => navigation.goBack()} style={styles.buttonAbsolute} activeOpacity={0.6}>
                     <AntDesign name="arrowleft" size={32} color="#FFB400"/>
                 </TouchableOpacity>
@@ -29,19 +28,19 @@ const VoirPlusA = () => {
             <View style={{flexDirection: "column"}}>
                 <Text style={styles.title}>{decode(item.title.rendered)}</Text>
                 <Text style={styles.date}>{moment(decode(item.date)).format('D MMMM YYYY [à] HH:mm')}</Text>
-                
+
                 <Text style={{
                     marginTop: 15,
                     opacity: 0.7,
                     fontSize: 14,
                     fontWeight: 300,
                     textAlign: 'justify',
-                    margin:10,
+                    margin: 10,
                     flexWrap: 'wrap',
-                }}><HTMLView value={decode(item.content.rendered)} css ={{p:{textAlign:'justify',}}}/></Text>
+                }}><HTMLView value={decode(item.content.rendered)} css={{p: {textAlign: 'justify',}}}/></Text>
             </View>
-           
-            
+
+
         </ScrollView>
     );
 };
@@ -81,9 +80,9 @@ const styles = StyleSheet.create({
         elevation: 9,
     },
     image:
-    {
-        width:screenWidth,
-    },
+        {
+            width: screenWidth,
+        },
     title:
         {
             color: '#FFB400',
@@ -113,11 +112,11 @@ const styles = StyleSheet.create({
             marginLeft: 15,
             fontWeight: 600
         },
-        date:
+    date:
         {
-            marginLeft:15,
+            marginLeft: 15,
         },
-     
+
 
 });
 
