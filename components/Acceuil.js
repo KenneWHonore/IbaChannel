@@ -104,7 +104,7 @@ const Acceuil = (item) => {
     const handlePressSearch = () => {
         navigation.navigate('Search');
     };
-    
+
 
 
 
@@ -141,7 +141,9 @@ const Acceuil = (item) => {
                                     source={{ uri: getImage(item, 'medium') }}
                                 />
                             ) : (
-                                <View style={[styles.imageStyle, { backgroundColor: 'lightgray' }]} />
+                                <View style={[styles]}>
+                                    <Image source={require('../assets/notFound.jpeg')} style={[styles.imageStyle, { resizeMode: 'cover' }]} />
+                                </View>
                             )}
                         </TouchableOpacity>
                         <Text style={{
@@ -178,8 +180,8 @@ const Acceuil = (item) => {
                 scrollEventThrottle={10}
                 bounces={true}
                 contentContainerStyle={{ paddingVertical: 10, paddingRight: 10 }}
-                snapToInterval={'center'} 
-                />
+                snapToInterval={'center'}
+            />
             <View style={styles.populaire}>
                 <Text style={{ fontWeight: 600, fontSize: '24' }}>Populaire</Text>
                 <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
@@ -196,7 +198,9 @@ const Acceuil = (item) => {
                                     source={{ uri: getImage(item, 'medium') }}
                                 />
                             ) : (
-                                <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                <View style={[styles]}>
+                                    <Image source={require('../assets/notFound.jpeg')} style={[styles.image, { resizeMode: 'cover' }]} />
+                                </View>
                             )}
                         </TouchableOpacity>
                         <View>
@@ -209,7 +213,7 @@ const Acceuil = (item) => {
                                 }
                                 <Text key={index} style={styles.title}>Actu</Text>
                             </View>
-                            <Text style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
+                            <Text style={styles.text}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
                             <View style={styles.VTI}>
                                 <TouchableOpacity onPress={() => handlePress(item)}>
                                     <Text style={styles.Voirp}>Lire plus</Text>
@@ -229,8 +233,8 @@ const Acceuil = (item) => {
                 </View>
                 <View style={styles.Contain}>
 
-                    <FlatList data={PointActu} 
-                    nestedScrollEnabled
+                    <FlatList data={PointActu}
+                        nestedScrollEnabled
                         keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
 
                             <View style={styles.containImage}>
@@ -242,8 +246,9 @@ const Acceuil = (item) => {
                                                 source={{ uri: getImage(item, 'medium') }}
                                             />
                                         ) : (
-                                            <View
-                                                style={[styles.imageActu, filter = "grayscale(0.5)", { backgroundColor: 'lightgray' }]} />
+                                            <View style={[styles.imageActu]}>
+                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.imageActu, filter = "grayscale(0.5)", { resizeMode: 'cover', }]} />
+                                            </View>
                                         )}
                                         <Text style={[styles.ImageText, {
                                             position: 'absolute',
@@ -251,9 +256,9 @@ const Acceuil = (item) => {
                                             left: 10,
                                             fontSize: 16,
                                             color: '#fff',
-                                            backgroundColor:'rgba(0, 0, 0, 0.2)',
+                                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
                                             backdropFilter: 'blur(10px)',
-                                            paddingLeft:2
+                                            paddingLeft: 2
                                         }]}>{decode(item.title.rendered).substring(0, 35) + '...'}</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -290,7 +295,9 @@ const Acceuil = (item) => {
                                             />
 
                                         ) : (
-                                            <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                            <View style={[styles.imageSA, { marginLeft: 50 }]}>
+                                                <Image source={require('../assets/notFound.jpeg')} style={[{ width: 300, height: 200 }, { justifyContent: 'center', alignItems: 'center' }]} />
+                                            </View>
                                         )}
                                     </TouchableOpacity>
                                     <Text style={[styles.title, {
@@ -316,7 +323,9 @@ const Acceuil = (item) => {
                                                 source={{ uri: getImage(item, 'medium') }}
                                             />
                                         ) : (
-                                            <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                            <View style={[styles]}>
+                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.image, { resizeMode: 'cover' }]} />
+                                            </View>
                                         )}
                                     </TouchableOpacity>
                                     <View>
@@ -352,7 +361,9 @@ const Acceuil = (item) => {
                                         />
 
                                     ) : (
-                                        <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                        <View style={[styles]}>
+                                            <Image source={require('../assets/notFound.jpeg')} style={[styles.imageSuiteActu2, { resizeMode: 'cover' }]} />
+                                        </View>
                                     )}
                                 </TouchableOpacity>
                             </View>
@@ -386,7 +397,9 @@ const Acceuil = (item) => {
                                             />
 
                                         ) : (
-                                            <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                            <View style={[styles]}>
+                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.imageSA, { resizeMode: 'cover' }]} />
+                                            </View>
                                         )}
                                     </TouchableOpacity>
                                     <Text style={[styles.title, {
@@ -412,13 +425,15 @@ const Acceuil = (item) => {
                                                 source={{ uri: getImage(item, 'medium') }}
                                             />
                                         ) : (
-                                            <View style={[styles.image, { backgroundColor: 'lightgray' }]} />
+                                            <View style={[styles]}>
+                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.image, { resizeMode: 'cover' }]} />
+                                            </View>
                                         )}
                                     </TouchableOpacity>
                                     <View>
                                         <Text style={[styles.title]}>Actu</Text>
                                         <Text
-                                            style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
+                                            style={styles.text}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
                                         <View style={styles.VTI}>
                                             <TouchableOpacity onPress={() => handlePressVoirPlusLePoint4(item)}>
                                                 <Text style={styles.Voirp}>Lire plus</Text>
@@ -458,7 +473,7 @@ const styles = StyleSheet.create({
     },
     categories:
     {
-        
+
     },
     AT: {
         flexDirection: 'row',
@@ -566,8 +581,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 300,
         marginLeft: 10,
-        width: '75%',
-        opacity: 0.7
+        width: '40%',
+        opacity: 0.7,
+
     },
     Voirp:
     {

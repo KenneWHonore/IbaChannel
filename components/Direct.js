@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView ,FlatList} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import DernierVideo from '../DernierVideo';
 import ShortReplay from '../ShortReplay';
 
@@ -7,66 +7,66 @@ import ShortReplay from '../ShortReplay';
 const Direct = () => {
   return (
     <View style={styles.container}>
-      
+
       <View style={styles.Direct}>
-        <TouchableOpacity>
-          <Image style={styles.imageStyle} source={require('../assets/DirectImage.jpg')} />
-        </TouchableOpacity>
+
+       
+
       </View>
       <ScrollView
-      showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
       >
-      <View style={styles.AT}>
-        <Text style={{ fontWeight: 500, fontSize: '24' }}>Video a la une </Text>
-        <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
-          voir</Text></TouchableOpacity>
-      </View>
-      <View style={styles.dernierVideo}>
-        <FlatList
-          data={DernierVideo}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <View style={styles.video}>
-              <TouchableOpacity>
-                <Image source={item.image} style={styles.image} />
-              </TouchableOpacity>
-              <View style={styles.textVideo}>
-                <Text style={styles.temps}>{item.time}</Text>
+        <View style={styles.AT}>
+          <Text style={{ fontWeight: 500, fontSize: '24' }}>Video a la une </Text>
+          <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
+            voir</Text></TouchableOpacity>
+        </View>
+        <View style={styles.dernierVideo}>
+          <FlatList
+            data={DernierVideo}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.video}>
+                <TouchableOpacity>
+                  <Image source={item.image} style={styles.image} />
+                </TouchableOpacity>
+                <View style={styles.textVideo}>
+                  <Text style={styles.temps}>{item.time}</Text>
 
-                <View style={styles.VTI}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.seeDerniereVideo}>{item.see} Vues</Text>
+                  <View style={styles.VTI}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.seeDerniereVideo}>{item.see} Vues</Text>
 
 
+                  </View>
                 </View>
               </View>
-            </View>
-          )}
-        />
-      </View>
-      <View style={styles.AT}>
-        <Text style={{ fontWeight: 500, fontSize: '24' }}>Pour vous</Text>
-        <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
-          voir</Text></TouchableOpacity>
-      </View>
-      <View style={styles.Contain}>
-        <FlatList data={ShortReplay}
-          keyExtractor={(item, index) => index.toString()}
+            )}
+          />
+        </View>
+        <View style={styles.AT}>
+          <Text style={{ fontWeight: 500, fontSize: '24' }}>Pour vous</Text>
+          <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
+            voir</Text></TouchableOpacity>
+        </View>
+        <View style={styles.Contain}>
+          <FlatList data={ShortReplay}
+            keyExtractor={(item, index) => index.toString()}
 
-          renderItem={({ item }) => (
-            <View style={styles.containImage}>
-              <View style={{ position: 'relative' }}>
-                <TouchableOpacity>
-                  <Image source={item.image} style={styles.shortImage} filter="grayscale(0.5)" />
+            renderItem={({ item }) => (
+              <View style={styles.containImage}>
+                <View style={{ position: 'relative' }}>
+                  <TouchableOpacity>
+                    <Image source={item.image} style={styles.shortImage} filter="grayscale(0.5)" />
 
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-        />
-      </View>
+            )}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   imageStyle:
   {
-    width:415
+    width: 415
   },
   AT: {
     flexDirection: 'row',
