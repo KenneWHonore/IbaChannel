@@ -30,7 +30,7 @@ const parseDuration = (duration) => {
 
   return `${minutesDisplay}:${secondsDisplay.toString().padStart(2, '0')}`;
 };
-const API_KEY = '';
+const API_KEY = 'AIzaSyAQvzvN_7BJNVEZEHqEIFu-8D04UPt2_Mg';
 const CHANNEL_ID = 'UCNt10XGfyfzeuVVas-13iXQ';
 
 const Replay = () => {
@@ -60,6 +60,11 @@ const Replay = () => {
         setVideos5(section5Videos);
       });
   }, []);
+
+  const handlePress = (item) => {
+
+    navigation.navigate('ListenReplay', { item: item });
+  };
 
 
 
@@ -107,6 +112,7 @@ const Replay = () => {
       </View>
       <View style={styles.Replay}>
         <FlatList
+          nestedScrollEnabled
           horizontal
           showsHorizontalScrollIndicator={false}
           scrollEventThrottle={100}
@@ -115,7 +121,7 @@ const Replay = () => {
           renderItem={({ item }) => (
             <View style={styles.cardVideo}>
               <View style={{ position: 'relative' }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handlePress(item)}>
                   <Image source={{ uri: item.snippet.thumbnails.high.url }} style={styles.imageActu}
                     filter="grayscale(0.5)" />
                   <View style={{
@@ -179,7 +185,7 @@ const Replay = () => {
           renderItem={({ item }) => (
             <View style={styles.containImage}>
               <View style={{ position: 'relative' }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handlePress(item)}>
                   <Image
                     source={{ uri: item.snippet.thumbnails.high.url }}
                     style={styles.shortImage}
@@ -218,7 +224,7 @@ const Replay = () => {
           keyExtractor={(item) => item.id.videoId}
           renderItem={({ item }) => (
             <View style={styles.video}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handlePress(item)}>
                 <Image source={{ uri: item.snippet.thumbnails.high.url }} style={styles.image} />
                 <View style={{
                   position: 'absolute',
@@ -241,6 +247,9 @@ const Replay = () => {
                     position: 'absolute',
                     top: 60,
                   }]}>{videoStats[item.id.videoId] && videoStats[item.id.videoId].viewCount} vues</Text>
+                  <Text style={{ color: '#fff', fontSize: 12 }}>
+                    {videoDetails[item.id.videoId] && parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+                  </Text>
 
 
                 </View>
@@ -260,7 +269,7 @@ const Replay = () => {
           keyExtractor={(item) => item.id.videoId}
           renderItem={({ item }) => (
             <View style={styles.NosFormationCard}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handlePress(item)}>
                 <Image style={styles.imageSA} source={{ uri: item.snippet.thumbnails.high.url }} />
                 <View style={{
                   position: 'absolute',
@@ -279,6 +288,9 @@ const Replay = () => {
                 marginTop: 5,
                 width: '90%'
               }}>{decode(item.snippet.title).substring(0, 100) + '...'}</Text>
+              <Text style={{ color: '#fff', fontSize: 12 }}>
+                {videoDetails[item.id.videoId] && parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+              </Text>
             </View>
           )}
         />
@@ -294,9 +306,11 @@ const Replay = () => {
           renderItem={({ item }) => (
             <View style={styles.containImage}>
               <View style={{ position: 'relative' }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => handlePress(item)}>
                   <Image source={{ uri: item.snippet.thumbnails.high.url }} style={styles.shortImage} filter="grayscale(0.5)" />
-
+                  <Text style={{ color: '#fff', fontSize: 12 }}>
+                    {videoDetails[item.id.videoId] && parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+                  </Text>
                 </TouchableOpacity>
               </View>
             </View>

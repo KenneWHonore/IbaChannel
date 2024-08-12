@@ -86,21 +86,7 @@ const Acceuil = (item) => {
 
         navigation.navigate('VoirPlus', { item: item });
     };
-    const handlePressVoirPlusA = (item) => {
-        navigation.navigate('VoirPlusA', { item: item });
-    };
-    const handlePressVoirPlusLePoint = (item) => {
-        navigation.navigate('VoirPlusLepoint', { item: item });
-    };
-    const handlePressVoirPlusLePoint2 = (item) => {
-        navigation.navigate('VoirPlusLepoint2', { item: item });
-    };
-    const handlePressVoirPlusLePoint3 = (item) => {
-        navigation.navigate('VoirPlusLepoint3', { item: item });
-    };
-    const handlePressVoirPlusLePoint4 = (item) => {
-        navigation.navigate('VoirPlusLepoint4', { item: item });
-    };
+
     const handlePressSearch = () => {
         navigation.navigate('Search');
     };
@@ -134,7 +120,7 @@ const Acceuil = (item) => {
                 nestedScrollEnabled
                 keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
                     <View style={styles.cardContainer}>
-                        <TouchableOpacity onPress={() => handlePressVoirPlusA(item)}>
+                        <TouchableOpacity onPress={() => handlePress(item)}>
                             {getImage(item, 'medium') ? (
                                 <Image
                                     style={[styles.imageStyle, { resizeMode: 'cover' }]}
@@ -159,7 +145,7 @@ const Acceuil = (item) => {
                             paddingHorizontal: 5,
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity onPress={() => handlePressVoirPlusA(item)}
+                            <TouchableOpacity onPress={() => handlePress(item)}
                                 style={{ flexDirection: 'row' }}>
                                 <Text style={{
                                     color: '#FFB400',
@@ -239,7 +225,7 @@ const Acceuil = (item) => {
 
                             <View style={styles.containImage}>
                                 <View style={{ position: 'relative' }}>
-                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint(item)}>
+                                    <TouchableOpacity onPress={() => handlePress(item)}>
                                         {getImage(item, 'medium') ? (
                                             <Image
                                                 style={[styles.imageActu, filter = "grayscale(0.5)", { resizeMode: 'cover', }]}
@@ -287,7 +273,7 @@ const Acceuil = (item) => {
                         if (index === 0) {
                             return (
                                 <View style={{}}>
-                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint2(item)}>
+                                    <TouchableOpacity onPress={() => handlePress(item)}>
                                         {getImage(item, 'medium') ? (
                                             <Image
                                                 style={[styles.imageSA, { resizeMode: 'cover' }]}
@@ -303,7 +289,8 @@ const Acceuil = (item) => {
                                     <Text style={[styles.title, {
                                         marginLeft: 0,
                                         opacity: 0.8,
-                                        fontWeight: 600
+                                        fontWeight: 400,
+                                        fontSize:14
                                     }]}>Actu</Text>
                                     <Text style={[styles.text, {
                                         marginLeft: 0,
@@ -315,8 +302,8 @@ const Acceuil = (item) => {
                             );
                         } else {
                             return (
-                                <View style={[styles.CardSection, { marginBottom: 15, marginTop: 15 }]}>
-                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint2(item)}>
+                                <View style={[styles.CardSection, { marginBottom: 5, marginTop: 15 }]}>
+                                    <TouchableOpacity onPress={() => handlePress(item)}>
                                         {getImage(item, 'medium') ? (
                                             <Image
                                                 style={[styles.image, { resizeMode: 'cover' }]}
@@ -329,11 +316,11 @@ const Acceuil = (item) => {
                                         )}
                                     </TouchableOpacity>
                                     <View>
-                                        <Text style={[styles.title]}>Actu</Text>
+                                        <Text style={styles.title}>Actu</Text>
                                         <Text
                                             style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
                                         <View style={styles.VTI}>
-                                            <TouchableOpacity onPress={() => handlePressVoirPlusLePoint(item)}>
+                                            <TouchableOpacity onPress={() => handlePress(item)}>
                                                 <Text style={styles.Voirp}>Lire plus</Text>
                                             </TouchableOpacity>
                                             <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
@@ -353,7 +340,7 @@ const Acceuil = (item) => {
                     renderItem={({ item }) => (
                         <View style={styles.containImage}>
                             <View>
-                                <TouchableOpacity onPress={() => handlePressVoirPlusLePoint3(item)}>
+                                <TouchableOpacity onPress={() => handlePress(item)}>
                                     {getImage(item, 'medium') ? (
                                         <Image
                                             style={[styles.imageSuiteActu2, { resizeMode: 'cover' }]}
@@ -389,7 +376,7 @@ const Acceuil = (item) => {
                         if (index === 0) {
                             return (
                                 <View style={{}}>
-                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint3(item)}>
+                                    <TouchableOpacity onPress={() => handlePress(item)}>
                                         {getImage(item, 'medium') ? (
                                             <Image
                                                 style={[styles.imageSA, { resizeMode: 'cover' }]}
@@ -417,8 +404,8 @@ const Acceuil = (item) => {
                             );
                         } else {
                             return (
-                                <View style={[styles.CardSection, { marginBottom: 15, marginTop: 15 }]}>
-                                    <TouchableOpacity onPress={() => handlePressVoirPlusLePoint3(item)}>
+                                <View style={[styles.CardSection, { marginBottom: 5, marginTop: 15 }]}>
+                                    <TouchableOpacity onPress={() => handlePress(item)}>
                                         {getImage(item, 'medium') ? (
                                             <Image
                                                 style={[styles.image, { resizeMode: 'cover' }]}
@@ -435,7 +422,7 @@ const Acceuil = (item) => {
                                         <Text
                                             style={styles.text}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
                                         <View style={styles.VTI}>
-                                            <TouchableOpacity onPress={() => handlePressVoirPlusLePoint4(item)}>
+                                            <TouchableOpacity onPress={() => handlePress(item)}>
                                                 <Text style={styles.Voirp}>Lire plus</Text>
                                             </TouchableOpacity>
                                             <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
@@ -572,9 +559,10 @@ const styles = StyleSheet.create({
     title:
     {
         color: '#FFB400',
-        fontSize: 16,
-        fontWeight: 600,
+        fontSize: 14,
+        fontWeight: 200,
         marginLeft: 10,
+        marginTop:-3,
     },
     text:
     {
@@ -590,7 +578,7 @@ const styles = StyleSheet.create({
         color: '#FFB400',
         fontSize: 14,
         margin: 12,
-        marginTop: 25
+        marginTop: 15
 
     },
     temps:
@@ -598,7 +586,7 @@ const styles = StyleSheet.create({
         marginTop: 13,
         fontSize: 12,
         opacity: 0.5,
-        marginTop: 25
+        marginTop: 15
     },
     VTI:
     {
@@ -606,11 +594,11 @@ const styles = StyleSheet.create({
     },
     image2:
     {
-        marginTop: 13,
+       
         width: 20,
         height: 20,
         marginLeft: 110,
-        marginTop: 25,
+        marginTop: 15,
         opacity: 0.4
 
     },

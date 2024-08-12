@@ -1,73 +1,20 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList} from 'react-native';
 import DernierVideo from '../DernierVideo';
 import ShortReplay from '../ShortReplay';
+import WebView from 'react-native-webview';
 
 
 const Direct = () => {
   return (
     <View style={styles.container}>
 
-      <View style={styles.Direct}>
-
-       
-
-      </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.AT}>
-          <Text style={{ fontWeight: 500, fontSize: '24' }}>Video a la une </Text>
-          <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
-            voir</Text></TouchableOpacity>
-        </View>
-        <View style={styles.dernierVideo}>
-          <FlatList
-            data={DernierVideo}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View style={styles.video}>
-                <TouchableOpacity>
-                  <Image source={item.image} style={styles.image} />
-                </TouchableOpacity>
-                <View style={styles.textVideo}>
-                  <Text style={styles.temps}>{item.time}</Text>
-
-                  <View style={styles.VTI}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.seeDerniereVideo}>{item.see} Vues</Text>
-
-
-                  </View>
-                </View>
-              </View>
-            )}
-          />
-        </View>
-        <View style={styles.AT}>
-          <Text style={{ fontWeight: 500, fontSize: '24' }}>Pour vous</Text>
-          <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
-            voir</Text></TouchableOpacity>
-        </View>
-        <View style={styles.Contain}>
-          <FlatList data={ShortReplay}
-            keyExtractor={(item, index) => index.toString()}
-
-            renderItem={({ item }) => (
-              <View style={styles.containImage}>
-                <View style={{ position: 'relative' }}>
-                  <TouchableOpacity>
-                    <Image source={item.image} style={styles.shortImage} filter="grayscale(0.5)" />
-
-                  </TouchableOpacity>
-                </View>
-              </View>
-            )}
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          />
-        </View>
-      </ScrollView>
+      <WebView
+        source={{ uri: 'https://www.ibusiness.africa/' }}
+        style={{ flex: 1, width: '100%', height: 300 }}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+      />
     </View>
   );
 };

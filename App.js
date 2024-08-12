@@ -27,6 +27,7 @@ import VoirPlusLepoint from "./components/VoirPlusLepoint";
 import VoirPlusLePoint2 from "./components/VoirPlusLePoint2";
 import VoirPlusLePoint3 from "./components/VoirPlusLepoint3";
 import VoirPlusLepoint4 from "./components/VoirPlusLepoint4";
+import ListenReplay from "./components/ListenReplay";
 
 
 
@@ -58,6 +59,7 @@ const App = () => {
                         <Stack.Screen name="VoirPlusLepoint2" component={VoirPlusLePoint2}/>
                         <Stack.Screen name="VoirPlusLepoint3" component={VoirPlusLePoint3}/>
                         <Stack.Screen name="VoirPlusLepoint4" component={VoirPlusLepoint4}/>
+                        <Stack.Screen name="ListenReplay" component={ListenReplay}/>
                         
 
 

@@ -15,6 +15,7 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.10.0",
     "expo": "~51.0.20",
+    "expo-av": "^14.0.6",
     "expo-status-bar": "~1.12.1",
     "html-entities": "^2.5.2",
     "lottie-react-native": "^6.7.2",
@@ -24,6 +25,7 @@
     "react-native": "0.74.3",
     "react-native-animatable": "^1.4.0",
     "react-native-elements": "^3.4.3",
+    "react-native-gesture-handler": "~2.16.1",
     "react-native-grid-component": "^2.0.1",
     "react-native-htmlview": "^0.17.0",
     "react-native-inviewport": "^1.1.0",
@@ -33,8 +35,9 @@
     "react-native-screens": "^3.32.0",
     "react-native-svg": "^15.4.0",
     "react-native-vector-icons": "^10.1.0",
+    "react-native-video": "^6.4.3",
     "react-native-web": "~0.19.10",
-    "react-native-webview": "^13.10.5",
+    "react-native-webview": "13.8.6",
     "react-native-youtube": "^2.0.2"
   },
   "devDependencies": {
