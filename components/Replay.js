@@ -92,7 +92,8 @@ const Replay = () => {
   const handlePressSearch = () => {
     navigation.navigate('Search');
   };
-  const flatListRef = useRef(null);
+  const flatListRef1 = useRef(null);
+  const flatListRef2 = useRef(null);
 
   return (
     <ScrollView
@@ -177,14 +178,14 @@ const Replay = () => {
       <View style={styles.AT}>
         <Text style={{ fontWeight: 500, fontSize: '24' }}>Pour vous</Text>
         <TouchableOpacity onPress={() => {
-          flatListRef.current.scrollToEnd({ animated: true });
+          flatListRef1.current.scrollToEnd({ animated: true });
         }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
           voir</Text></TouchableOpacity>
       </View>
       <View style={styles.Contain}>
         <FlatList
           data={videos2}
-          ref={flatListRef}
+          ref={flatListRef1}
           keyExtractor={(item) => item.id.videoId}
           renderItem={({ item }) => (
             <View style={styles.containImage}>
@@ -337,13 +338,13 @@ const Replay = () => {
       <View style={styles.AT}>
         <Text style={{ fontWeight: 500, fontSize: '24' }}>L'actualité</Text>
         <TouchableOpacity onPress={() => {
-          flatListRef.current.scrollToEnd({ animated: true });
+          flatListRef2.current.scrollToEnd({ animated: true });
         }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
           voir</Text></TouchableOpacity>
       </View>
       <View style={styles.Contain}>
         <FlatList data={videos5}
-        ref={flatListRef}
+        ref={flatListRef2}
           keyExtractor={(item) => item.id.videoId}
           renderItem={({ item }) => (
             <View style={styles.containImage}>

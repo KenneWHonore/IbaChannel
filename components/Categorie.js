@@ -52,7 +52,8 @@ const Categorie = () => {
               </TouchableOpacity>
             </View>
           )}
-          numColumns={2} />
+          numColumns={2} 
+          showsVerticalScrollIndicator={false}/>
 
     </View>
   );

@@ -102,7 +102,8 @@ const Acceuil = (item) => {
         setLoading(false);
     };
 
-    const flatListRef = useRef(null);
+    const flatListRef1 = useRef(null);
+    const flatListRef2 = useRef(null);
 
 
 
@@ -127,12 +128,12 @@ const Acceuil = (item) => {
             <View style={styles.AT}>
                 <Text style={{ fontWeight: 600, fontSize: '24' }}>A la une</Text>
                 <TouchableOpacity onPress={() => {
-                    flatListRef.current.scrollToEnd({ animated: true });
+                    flatListRef1.current.scrollToEnd({ animated: true });
                 }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
                     voir</Text></TouchableOpacity>
             </View>
             <FlatList data={Data}
-                ref={flatListRef}
+                ref={flatListRef1}
                 nestedScrollEnabled
                 keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
                     <View style={styles.cardContainer}>
@@ -238,14 +239,14 @@ const Acceuil = (item) => {
                 <View style={styles.AB}>
                     <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 20 }}>Le point sur l'actualité</Text>
                     <TouchableOpacity onPress={() => {
-                        flatListRef.current.scrollToEnd({ animated: true });
+                        flatListRef2.current.scrollToEnd({ animated: true });
                     }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 15, marginTop: 10 }]}>Tout
                         voir</Text></TouchableOpacity>
                 </View>
                 <View style={styles.Contain}>
 
                     <FlatList data={PointActu}
-                        ref={flatListRef}
+                        ref={flatListRef2}
                         nestedScrollEnabled
                         keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
 
