@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { decode } from 'html-entities';
@@ -92,6 +92,7 @@ const Replay = () => {
   const handlePressSearch = () => {
     navigation.navigate('Search');
   };
+  const flatListRef = useRef(null);
 
   return (
     <ScrollView
@@ -175,12 +176,15 @@ const Replay = () => {
       </View>
       <View style={styles.AT}>
         <Text style={{ fontWeight: 500, fontSize: '24' }}>Pour vous</Text>
-        <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
+        <TouchableOpacity onPress={() => {
+          flatListRef.current.scrollToEnd({ animated: true });
+        }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
           voir</Text></TouchableOpacity>
       </View>
       <View style={styles.Contain}>
         <FlatList
           data={videos2}
+          ref={flatListRef}
           keyExtractor={(item) => item.id.videoId}
           renderItem={({ item }) => (
             <View style={styles.containImage}>
@@ -211,6 +215,7 @@ const Replay = () => {
           )}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{paddingRight:10}}
         />
       </View>
       <View style={styles.AT}>
@@ -219,89 +224,126 @@ const Replay = () => {
           voir</Text></TouchableOpacity>
       </View>
       <View style={styles.dernierVideo}>
-        <FlatList
-          data={videos3}
-          keyExtractor={(item) => item.id.videoId}
-          renderItem={({ item }) => (
-            <View style={styles.video}>
+        {Array.isArray(videos3) && videos3.length > 0 ? (
+          videos3.map((item, index) => (
+            <View key={index} style={styles.video}>
               <TouchableOpacity onPress={() => handlePress(item)}>
-                <Image source={{ uri: item.snippet.thumbnails.high.url }} style={styles.image} />
-                <View style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: [{ translateX: -12 }, { translateY: -12 }],
-                }}>
+                <Image
+                  source={{ uri: item.snippet.thumbnails.high.url }}
+                  style={styles.image}
+                />
+                <View
+                  style={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: [{ translateX: -12 }, { translateY: -12 }],
+                  }}
+                >
                   <Icon name="play" size={30} color="#fff" opacity={0.9} />
                 </View>
               </TouchableOpacity>
 
               <View style={styles.textVideo}>
-                <Text
-                  style={styles.temps}>{moment.utc(item.snippet.publishTime).local().fromNow()}</Text>
+                <Text style={styles.temps}>
+                  {moment.utc(item.snippet.publishTime).local().fromNow()}
+                </Text>
 
                 <View style={[styles.VTI, { width: '85%' }]}>
-                  <Text
-                    style={styles.title}>{decode(item.snippet.title).substring(0, 55) + '...'}</Text>
-                  <Text style={[styles.seeDerniereVideo, {
-                    position: 'absolute',
-                    top: 60,
-                  }]}>{videoStats[item.id.videoId] && videoStats[item.id.videoId].viewCount} vues</Text>
-                  <Text style={{ color: '#fff', fontSize: 12 }}>
-                    {videoDetails[item.id.videoId] && parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+                  <Text style={styles.title}>
+                    {decode(item.snippet.title).substring(0, 55) + '...'}
                   </Text>
-
-
+                  <Text
+                    style={[
+                      styles.seeDerniereVideo,
+                      {
+                        position: 'absolute',
+                        top: 60,
+                      },
+                    ]}
+                  >
+                    {videoStats[item.id.videoId] &&
+                      videoStats[item.id.videoId].viewCount}{' '}
+                    vues
+                  </Text>
+                  <Text style={{ color: '#fff', fontSize: 12 }}>
+                    {videoDetails[item.id.videoId] &&
+                      parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+                  </Text>
                 </View>
               </View>
             </View>
-          )}
-        />
-      </View>
-      <View style={styles.NosEmission}>
-        <View style={styles.AT}>
-          <Text style={{ fontWeight: 500, fontSize: '24' }}>Suite Actu</Text>
-          <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
-            voir</Text></TouchableOpacity>
-        </View>
-        <FlatList
-          data={videos4}
-          keyExtractor={(item) => item.id.videoId}
-          renderItem={({ item }) => (
-            <View style={styles.NosFormationCard}>
-              <TouchableOpacity onPress={() => handlePress(item)}>
-                <Image style={styles.imageSA} source={{ uri: item.snippet.thumbnails.high.url }} />
-                <View style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: [{ translateX: -12 }, { translateY: -12 }],
-                }}>
-                  <Icon name="play" size={32} color="#fff" />
-                </View>
-              </TouchableOpacity>
-              <Text style={{
-                marginLeft: 25,
-                opacity: 0.8,
-                fontWeight: 300,
-                fontSize: 16,
-                marginTop: 5,
-                width: '90%'
-              }}>{decode(item.snippet.title).substring(0, 100) + '...'}</Text>
-              <Text style={{ color: '#fff', fontSize: 12 }}>
-                {videoDetails[item.id.videoId] && parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+          ))
+        ) : (
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}></Text>
+          </View>
+        )}
+        <View style={styles.NosEmission}>
+          <View style={styles.AT}>
+            <Text style={{ fontWeight: 500, fontSize: '24' }}>Suite Actu</Text>
+            <TouchableOpacity>
+              <Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>
+                Tout voir
               </Text>
-            </View>
-          )}
-        />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.NosFormationsContainer}>
+            {Array.isArray(videos4) && videos4.length > 0 ? (
+              videos4.map((item, index) => (
+                <View key={index} style={styles.NosFormationCard}>
+                  <TouchableOpacity onPress={() => handlePress(item)}>
+                    <Image
+                      style={styles.imageSA}
+                      source={{ uri: item.snippet.thumbnails.high.url }}
+                    />
+                    <View
+                      style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: [{ translateX: -12 }, { translateY: -12 }],
+                      }}
+                    >
+                      <Icon name="play" size={32} color="#fff" />
+                    </View>
+                  </TouchableOpacity>
+                  <Text
+                    style={{
+                      marginLeft: 25,
+                      opacity: 0.8,
+                      fontWeight: 300,
+                      fontSize: 16,
+                      marginTop: 5,
+                      width: '90%',
+                    }}
+                  >
+                    {decode(item.snippet.title).substring(0, 100) + '...'}
+                  </Text>
+                  <Text style={{ color: '#fff', fontSize: 12 }}>
+                    {videoDetails[item.id.videoId] &&
+                      parseDuration(videoDetails[item.id.videoId].contentDetails.duration)}
+                  </Text>
+                </View>
+              ))
+            ) : (
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}></Text>
+              </View>
+            )}
+          </View>
+        </View>
       </View>
       <View style={styles.AT}>
         <Text style={{ fontWeight: 500, fontSize: '24' }}>L'actualité</Text>
-        <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
+        <TouchableOpacity onPress={() => {
+          flatListRef.current.scrollToEnd({ animated: true });
+        }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
           voir</Text></TouchableOpacity>
       </View>
       <View style={styles.Contain}>
         <FlatList data={videos5}
+        ref={flatListRef}
           keyExtractor={(item) => item.id.videoId}
           renderItem={({ item }) => (
             <View style={styles.containImage}>
@@ -317,6 +359,8 @@ const Replay = () => {
           )}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingRight: 10 }}
+          
         />
       </View>
     </ScrollView>

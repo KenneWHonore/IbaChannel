@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { Dimensions, FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { decode } from 'html-entities';
 import moment from 'moment';
@@ -31,7 +31,6 @@ export const getImage = (post, imageSize = 'medium') => {
 };
 
 const Acceuil = (item) => {
-    const imageUrl = getImage(item, 'medium');
     moment.locale('fr');
     const navigation = useNavigation();
     const [Data, setData] = useState([]);
@@ -90,6 +89,20 @@ const Acceuil = (item) => {
     const handlePressSearch = () => {
         navigation.navigate('Search');
     };
+    const handleEndReached = () => {
+        if (!loading) {
+            setLoading(true);
+            fetchMoreData();
+        }
+    };
+    const fetchMoreData = async () => {
+        const response = await fetch(`https://afriquemedia.tv/wp-json/wp/v2/posts?offset=${Data.length}&per_page=10`);
+        const newData = await response.json();
+        setData([...Data, ...newData]);
+        setLoading(false);
+    };
+
+    const flatListRef = useRef(null);
 
 
 
@@ -113,10 +126,13 @@ const Acceuil = (item) => {
             </View>
             <View style={styles.AT}>
                 <Text style={{ fontWeight: 600, fontSize: '24' }}>A la une</Text>
-                <TouchableOpacity><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
+                <TouchableOpacity onPress={() => {
+                    flatListRef.current.scrollToEnd({ animated: true });
+                }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 35, marginTop: 10 }]}>Tout
                     voir</Text></TouchableOpacity>
             </View>
             <FlatList data={Data}
+                ref={flatListRef}
                 nestedScrollEnabled
                 keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
                     <View style={styles.cardContainer}>
@@ -199,7 +215,12 @@ const Acceuil = (item) => {
                                 }
                                 <Text key={index} style={styles.title}>Actu</Text>
                             </View>
-                            <Text style={styles.text}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
+                            <Text style={[styles.text, {
+                                width: '50%', fontSize: 14,
+                                fontWeight: 400,
+                                marginLeft: 10,
+                                opacity: 0.7,
+                            }]}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
                             <View style={styles.VTI}>
                                 <TouchableOpacity onPress={() => handlePress(item)}>
                                     <Text style={styles.Voirp}>Lire plus</Text>
@@ -216,10 +237,15 @@ const Acceuil = (item) => {
             <View style={styles.BrefActu}>
                 <View style={styles.AB}>
                     <Text style={{ fontSize: 20, marginTop: 5, marginLeft: 20 }}>Le point sur l'actualité</Text>
+                    <TouchableOpacity onPress={() => {
+                        flatListRef.current.scrollToEnd({ animated: true });
+                    }}><Text style={[styles.TV, { color: '#FFB400', marginRight: 15, marginTop: 10 }]}>Tout
+                        voir</Text></TouchableOpacity>
                 </View>
                 <View style={styles.Contain}>
 
                     <FlatList data={PointActu}
+                        ref={flatListRef}
                         nestedScrollEnabled
                         keyExtractor={(item, index) => index.toString()} renderItem={({ item }) => (
 
@@ -232,7 +258,7 @@ const Acceuil = (item) => {
                                                 source={{ uri: getImage(item, 'medium') }}
                                             />
                                         ) : (
-                                            <View style={[styles.imageActu]}>
+                                            <View >
                                                 <Image source={require('../assets/notFound.jpeg')} style={[styles.imageActu, filter = "grayscale(0.5)", { resizeMode: 'cover', }]} />
                                             </View>
                                         )}
@@ -266,75 +292,101 @@ const Acceuil = (item) => {
             </View>
 
             <View style={styles.newSection2}>
-                <FlatList
-                    data={PointActu2}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => {
-                        if (index === 0) {
-                            return (
-                                <View style={{}}>
-                                    <TouchableOpacity onPress={() => handlePress(item)}>
-                                        {getImage(item, 'medium') ? (
+                {PointActu2.map((item, index) => {
+                    if (index === 0) {
+                        return (
+                            <View key={index} style={{}}>
+                                <TouchableOpacity onPress={() => handlePress(item)}>
+                                    {getImage(item, 'medium') ? (
+                                        <Image
+                                            style={[styles.imageSA, { resizeMode: 'cover' }]}
+                                            source={{ uri: getImage(item, 'medium') }}
+                                        />
+                                    ) : (
+                                        <View style={[styles.imageSA, { marginLeft: 50 }]}>
                                             <Image
-                                                style={[styles.imageSA, { resizeMode: 'cover' }]}
-                                                source={{ uri: getImage(item, 'medium') }}
+                                                source={require('../assets/notFound.jpeg')}
+                                                style={[
+                                                    { width: 300, height: 200 },
+                                                    { justifyContent: 'center', alignItems: 'center' },
+                                                ]}
                                             />
-
-                                        ) : (
-                                            <View style={[styles.imageSA, { marginLeft: 50 }]}>
-                                                <Image source={require('../assets/notFound.jpeg')} style={[{ width: 300, height: 200 }, { justifyContent: 'center', alignItems: 'center' }]} />
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                    <Text style={[styles.title, {
-                                        marginLeft: 0,
-                                        opacity: 0.8,
-                                        fontWeight: 400,
-                                        fontSize:14
-                                    }]}>Actu</Text>
-                                    <Text style={[styles.text, {
-                                        marginLeft: 0,
-                                        marginTop: 5,
-                                        fontWeight: 500,
-                                        width: '90%'
-                                    }]}>{decode(item.title.rendered).substring(0, 200) + '...'}</Text>
-                                </View>
-                            );
-                        } else {
-                            return (
-                                <View style={[styles.CardSection, { marginBottom: 5, marginTop: 15 }]}>
-                                    <TouchableOpacity onPress={() => handlePress(item)}>
-                                        {getImage(item, 'medium') ? (
-                                            <Image
-                                                style={[styles.image, { resizeMode: 'cover' }]}
-                                                source={{ uri: getImage(item, 'medium') }}
-                                            />
-                                        ) : (
-                                            <View style={[styles]}>
-                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.image, { resizeMode: 'cover' }]} />
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                    <View>
-                                        <Text style={styles.title}>Actu</Text>
-                                        <Text
-                                            style={styles.text}>{decode(item.title.rendered).substring(0, 50) + '...'}</Text>
-                                        <View style={styles.VTI}>
-                                            <TouchableOpacity onPress={() => handlePress(item)}>
-                                                <Text style={styles.Voirp}>Lire plus</Text>
-                                            </TouchableOpacity>
-                                            <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
-                                            <Image source={require('../assets/3points.png')} style={styles.image2} />
                                         </View>
+                                    )}
+                                </TouchableOpacity>
+                                <Text
+                                    style={[
+                                        styles.title,
+                                        {
+                                            marginLeft: 0,
+                                            opacity: 0.8,
+                                            fontWeight: 400,
+                                            fontSize: 14,
+                                        },
+                                    ]}
+                                >
+                                    Actu
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.text,
+                                        {
+                                            marginLeft: 0,
+                                            marginTop: 5,
+                                            fontWeight: 500,
+                                            width: '90%',
+                                        },
+                                    ]}
+                                >
+                                    {decode(item.title.rendered).substring(0, 200) + '...'}
+                                </Text>
+                            </View>
+                        );
+                    } else {
+                        return (
+                            <View
+                                key={index}
+                                style={[styles.CardSection, { marginBottom: 5, marginTop: 15 }]}
+                            >
+                                <TouchableOpacity onPress={() => handlePress(item)}>
+                                    {getImage(item, 'medium') ? (
+                                        <Image
+                                            style={[styles.image, { resizeMode: 'cover' }]}
+                                            source={{ uri: getImage(item, 'medium') }}
+                                        />
+                                    ) : (
+                                        <View style={[styles]}>
+                                            <Image
+                                                source={require('../assets/notFound.jpeg')}
+                                                style={[styles.image, { resizeMode: 'cover' }]}
+                                            />
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
+                                <View>
+                                    <Text style={styles.title}>Actu</Text>
+                                    <Text style={styles.text}>
+                                        {decode(item.title.rendered).substring(0, 85) + '...'}
+                                    </Text>
+                                    <View style={styles.VTI}>
+                                        <TouchableOpacity onPress={() => handlePress(item)}>
+                                            <Text style={styles.Voirp}>Lire plus</Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
+                                        <Image
+                                            source={require('../assets/3points.png')}
+                                            style={styles.image2}
+                                        />
                                     </View>
                                 </View>
-                            );
-                        }
-                    }}
-                />
+                            </View>
+                        );
+                    }
+                })}
             </View>
             <View style={styles.suiteActu2}>
                 <FlatList data={PointActu3}
+                    nestedScrollEnabled
                     keyExtractor={(item, index) => index.toString()}
 
                     renderItem={({ item }) => (
@@ -369,71 +421,96 @@ const Acceuil = (item) => {
             </View>
 
             <View style={styles.newSection2}>
-                <FlatList
-                    data={PointActu4}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => {
-                        if (index === 0) {
-                            return (
-                                <View style={{}}>
-                                    <TouchableOpacity onPress={() => handlePress(item)}>
-                                        {getImage(item, 'medium') ? (
+                {PointActu4.map((item, index) => {
+                    if (index === 0) {
+                        return (
+                            <View key={index} style={{}}>
+                                <TouchableOpacity onPress={() => handlePress(item)}>
+                                    {getImage(item, 'medium') ? (
+                                        <Image
+                                            style={[styles.imageSA, { resizeMode: 'cover' }]}
+                                            source={{ uri: getImage(item, 'medium') }}
+                                        />
+                                    ) : (
+                                        <View style={[styles]}>
                                             <Image
+                                                source={require('../assets/notFound.jpeg')}
                                                 style={[styles.imageSA, { resizeMode: 'cover' }]}
-                                                source={{ uri: getImage(item, 'medium') }}
                                             />
-
-                                        ) : (
-                                            <View style={[styles]}>
-                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.imageSA, { resizeMode: 'cover' }]} />
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                    <Text style={[styles.title, {
-                                        marginLeft: 0,
-                                        opacity: 0.8,
-                                        fontWeight: 600
-                                    }]}>Actu</Text>
-                                    <Text style={[styles.text, {
-                                        marginLeft: 0,
-                                        marginTop: 5,
-                                        fontWeight: 500,
-                                        width: '100%'
-                                    }]}>{decode(item.title.rendered).substring(0, 200) + '...'}</Text>
-                                </View>
-                            );
-                        } else {
-                            return (
-                                <View style={[styles.CardSection, { marginBottom: 5, marginTop: 15 }]}>
-                                    <TouchableOpacity onPress={() => handlePress(item)}>
-                                        {getImage(item, 'medium') ? (
-                                            <Image
-                                                style={[styles.image, { resizeMode: 'cover' }]}
-                                                source={{ uri: getImage(item, 'medium') }}
-                                            />
-                                        ) : (
-                                            <View style={[styles]}>
-                                                <Image source={require('../assets/notFound.jpeg')} style={[styles.image, { resizeMode: 'cover' }]} />
-                                            </View>
-                                        )}
-                                    </TouchableOpacity>
-                                    <View>
-                                        <Text style={[styles.title]}>Actu</Text>
-                                        <Text
-                                            style={styles.text}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
-                                        <View style={styles.VTI}>
-                                            <TouchableOpacity onPress={() => handlePress(item)}>
-                                                <Text style={styles.Voirp}>Lire plus</Text>
-                                            </TouchableOpacity>
-                                            <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
-                                            <Image source={require('../assets/3points.png')} style={styles.image2} />
                                         </View>
+                                    )}
+                                </TouchableOpacity>
+                                <Text
+                                    style={[
+                                        styles.title,
+                                        {
+                                            marginLeft: 0,
+                                            opacity: 0.8,
+                                            fontWeight: 300,
+                                        },
+                                    ]}
+                                >
+                                    Actu
+                                </Text>
+                                <Text
+                                    style={[
+                                        styles.text,
+                                        {
+                                            marginLeft: 0,
+                                            marginTop: 5,
+                                            fontWeight: 500,
+                                            width: '100%',
+                                        },
+                                    ]}
+                                >
+                                    {decode(item.title.rendered).substring(0, 200) + '...'}
+                                </Text>
+                            </View>
+                        );
+                    } else {
+                        return (
+                            <View
+                                key={index}
+                                style={[styles.CardSection, { marginBottom: 5, marginTop: 15 }]}
+                            >
+                                <TouchableOpacity onPress={() => handlePress(item)}>
+                                    {getImage(item, 'medium') ? (
+                                        <Image
+                                            style={[styles.image, { resizeMode: 'cover' }]}
+                                            source={{ uri: getImage(item, 'medium') }}
+                                        />
+                                    ) : (
+                                        <View style={[styles]}>
+                                            <Image
+                                                source={require('../assets/notFound.jpeg')}
+                                                style={[styles.image, { resizeMode: 'cover' }]}
+                                            />
+                                        </View>
+                                    )}
+                                </TouchableOpacity>
+                                <View>
+                                    <Text style={styles.title}>Actu</Text>
+                                    <Text style={styles.text}>
+                                        {decode(item.title.rendered).substring(0, 85) + '...'}
+                                    </Text>
+                                    <View style={styles.VTI}>
+                                        <TouchableOpacity onPress={() => handlePress(item)}>
+                                            <Text style={styles.Voirp}>Lire plus</Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.temps}>{moment(item.date).fromNow()}</Text>
+                                        <Image
+                                            source={require('../assets/3points.png')}
+                                            style={styles.image2}
+                                        />
                                     </View>
                                 </View>
-                            );
-                        }
-                    }}
-                />
+                            </View>
+                        );
+                    }
+                })}
+                {loading ? (
+                    <ActivityIndicator size="medium" color="#FFB400" />
+                ) : null}
             </View>
 
 
@@ -467,6 +544,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         width: '100%',
         margin: 20,
+    },
+    AB:
+    {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+
     },
     populaire:
     {
@@ -560,16 +644,16 @@ const styles = StyleSheet.create({
     {
         color: '#FFB400',
         fontSize: 14,
-        fontWeight: 200,
+        fontWeight: 300,
         marginLeft: 10,
-        marginTop:-3,
+        marginTop: -3,
     },
     text:
     {
         fontSize: 14,
-        fontWeight: 300,
+        fontWeight: 200,
         marginLeft: 10,
-        width: '40%',
+        width: '45%',
         opacity: 0.7,
 
     },
@@ -578,7 +662,7 @@ const styles = StyleSheet.create({
         color: '#FFB400',
         fontSize: 14,
         margin: 12,
-        marginTop: 15
+        marginTop: 15,
 
     },
     temps:
@@ -594,7 +678,7 @@ const styles = StyleSheet.create({
     },
     image2:
     {
-       
+
         width: 20,
         height: 20,
         marginLeft: 110,

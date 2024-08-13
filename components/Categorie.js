@@ -26,10 +26,7 @@ const Categorie = () => {
       </View>
       <Text style={styles.Categories}>Categories</Text>
       <Text style={{ marginLeft: 20, fontSize: 14, opacity: 0.5, fontWeight: 400, marginTop: 5 }}>Explorez une diversité de sujets grâce à notre section Catégories</Text>
-      <ScrollView  showsVerticalScrollIndicator={false} style={styles.CardCategories}>
-
-
-
+      
         <FlatList data={CategorieItem}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item, index }) => (
@@ -56,7 +53,7 @@ const Categorie = () => {
             </View>
           )}
           numColumns={2} />
-      </ScrollView>
+
     </View>
   );
 };
