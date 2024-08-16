@@ -17,7 +17,7 @@ import Direct from "./components/Direct";
 import AssetImage from "./assets/assetImage";
 import {Image} from "react-native";
 import Search from "./components/Search";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView,DrawerItem } from '@react-navigation/drawer';
 import {SCREENSDrawner} from "./components/ScreenDrawner"
 import APropos from "./components/Apropos";
 import TermeCondition from "./components/TermeCondition";
@@ -28,6 +28,9 @@ import VoirPlusLePoint2 from "./components/VoirPlusLePoint2";
 import VoirPlusLePoint3 from "./components/VoirPlusLepoint3";
 import VoirPlusLepoint4 from "./components/VoirPlusLepoint4";
 import ListenReplay from "./components/ListenReplay";
+import { View,Text } from "react-native-animatable";
+import About from "./components/About";
+
 
 
 
@@ -70,8 +73,26 @@ const App = () => {
 
     );
 };
+const DrawnerScreenWithDrawner = () => {
+    return(
+        <Drawer.Navigator initialRouteName={SCREENS.acceuil} 
+        drawerContent={(props)=>
+        <DrawerContentScrollView {...props}>
+            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
+            <DrawerItem label={'Acceuil'} onPress={()=>{props.navigation.navigate(SCREENS.acceuil)}}/>
+            <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
+            <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
+        
+        </DrawerContentScrollView>}>
+            <Drawer.Screen name={SCREENS.acceuil} component={Acceuil}/>
+            <Drawer.Screen name={SCREENS.about} component={About}/>
+        </Drawer.Navigator>
+    )
+}
 
 const TabNavigator = () => {
+
+    
     return (
         <Tab.Navigator 
         initialRouteName={SCREENS.acceuil} 
@@ -94,9 +115,10 @@ const TabNavigator = () => {
             }
             }>
             <Tab.Screen name={SCREENS.acceuil}
-                        component={Acceuil}
+                        component={DrawnerScreenWithDrawner}
                         
                         options={{
+                            headerShown: false,
                             title: 'A la une', tabBarIcon: ({focused}) =>
                                 <Image source={AssetImage.home}
                                        style={{height: 60, width: 60}}

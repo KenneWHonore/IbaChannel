@@ -3,4 +3,6 @@ export const SCREENS = {
     categorie: 'Categorie',
     replay: 'Replay',
     direct: 'Direct',
+    about: 'About',
+    privacy:'Privacy',
 };

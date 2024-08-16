@@ -221,7 +221,7 @@ const Acceuil = (item) => {
                                 fontWeight: 400,
                                 marginLeft: 10,
                                 opacity: 0.7,
-                            }]}>{decode(item.title.rendered).substring(0, 100) + '...'}</Text>
+                            }]}>{decode(item.title.rendered).substring(0, 75) + '...'}</Text>
                             <View style={styles.VTI}>
                                 <TouchableOpacity onPress={() => handlePress(item)}>
                                     <Text style={styles.Voirp}>Lire plus</Text>
