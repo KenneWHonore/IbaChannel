@@ -63,6 +63,7 @@ const App = () => {
                         <Stack.Screen name="VoirPlusLepoint3" component={VoirPlusLePoint3}/>
                         <Stack.Screen name="VoirPlusLepoint4" component={VoirPlusLepoint4}/>
                         <Stack.Screen name="ListenReplay" component={ListenReplay}/>
+                        <Stack.Screen name="About" component={About}/>
                         
 
 
@@ -79,13 +80,42 @@ const DrawnerScreenWithDrawner = () => {
         drawerContent={(props)=>
         <DrawerContentScrollView {...props}>
             <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
-            <DrawerItem label={'Acceuil'} onPress={()=>{props.navigation.navigate(SCREENS.acceuil)}}/>
             <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
             <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
+            <DrawerItem label={'Parametre'} onPress={()=>{props.navigation.navigate(SCREENS.setting)}}/>
         
         </DrawerContentScrollView>}>
-            <Drawer.Screen name={SCREENS.acceuil} component={Acceuil}/>
-            <Drawer.Screen name={SCREENS.about} component={About}/>
+            <Drawer.Screen name={SCREENS.acceuil} component={Acceuil}  options={{headerShown:false}}/>
+        </Drawer.Navigator>
+    )
+};
+const DrawnerScreenWithDrawner2 = () => {
+    return(
+        <Drawer.Navigator initialRouteName={SCREENS.categorie} 
+        drawerContent={(props)=>
+        <DrawerContentScrollView {...props}>
+            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
+            <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
+            <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
+            <DrawerItem label={'Parametre'} onPress={()=>{props.navigation.navigate(SCREENS.setting)}}/>
+        
+        </DrawerContentScrollView>}>
+            <Drawer.Screen name={SCREENS.categorie} component={Categorie} options={{headerShown:false}}/>
+        </Drawer.Navigator>
+    )
+};
+const DrawnerScreenWithDrawner3 = () => {
+    return(
+        <Drawer.Navigator initialRouteName={SCREENS.replay} 
+        drawerContent={(props)=>
+        <DrawerContentScrollView {...props}>
+            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
+            <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
+            <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
+            <DrawerItem label={'Parametre'} onPress={()=>{props.navigation.navigate(SCREENS.setting)}}/>
+        
+        </DrawerContentScrollView>}>
+            <Drawer.Screen name={SCREENS.replay} component={Replay} options={{headerShown:false}}/>
         </Drawer.Navigator>
     )
 }
@@ -126,8 +156,9 @@ const TabNavigator = () => {
                         }}
             />
             <Tab.Screen name={SCREENS.categorie}
-                        component={Categorie}
+                        component={DrawnerScreenWithDrawner2}
                         options={{
+                            headerShown:false,
                             title: 'Categories', tabBarIcon: ({focused}) =>
                                 <Image source={AssetImage.categorie}
                                        style={{height: 60, width: 60}}
@@ -135,7 +166,7 @@ const TabNavigator = () => {
                         }}
             />
             <Tab.Screen name={SCREENS.replay}
-                        component={Replay}
+                        component={DrawnerScreenWithDrawner3}
                         options={{
                             title: 'Replay', tabBarIcon: ({focused}) =>
                                 <Image source={AssetImage.replay}

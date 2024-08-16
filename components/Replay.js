@@ -5,6 +5,7 @@ import { decode } from 'html-entities';
 import moment from 'moment';
 import 'moment/locale/fr';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { DrawerActions } from '@react-navigation/native';
 
 
 const parseDuration = (duration) => {
@@ -68,6 +69,7 @@ const Replay = () => {
 
 
 
+
   useEffect(() => {
     if (videos && videos.length > 0) {
       const videoIds = videos.map(item => item.id.videoId);
@@ -94,13 +96,16 @@ const Replay = () => {
   };
   const flatListRef1 = useRef(null);
   const flatListRef2 = useRef(null);
+  const handlePressMenu = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
 
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePressMenu}>
           <Image style={[styles.image1, { width: 20, height: 20 }]} source={require('../assets/Menu.png')} />
         </TouchableOpacity>
         <TouchableOpacity>

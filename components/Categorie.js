@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, FlatList } from 'react-native';
 import CategorieItem from '../CategorieItem';
 import { useNavigation } from '@react-navigation/native';
+import { DrawerActions } from '@react-navigation/native';
 
 
 const Categorie = () => {
@@ -9,10 +10,13 @@ const Categorie = () => {
   const handlePressSearch = () => {
     navigation.navigate('Search');
   };
+  const handlePressMenu = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handlePressMenu}>
           <Image style={[styles.image1, { width: 20, height: 20 }]} source={require('../assets/Menu.png')} />
         </TouchableOpacity>
         <TouchableOpacity>

@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { decode } from 'html-entities';
 import moment from 'moment';
 import 'moment/locale/fr';
+import { DrawerActions } from '@react-navigation/native';
 
 
 
@@ -104,6 +105,9 @@ const Acceuil = (item) => {
 
     const flatListRef1 = useRef(null);
     const flatListRef2 = useRef(null);
+    const handlePressMenu = () => {
+        navigation.dispatch(DrawerActions.openDrawer());
+      };
 
 
 
@@ -113,7 +117,7 @@ const Acceuil = (item) => {
         <ScrollView style={styles.container}
             showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handlePressMenu}>
                     <Image style={[styles.image1, { width: 20, height: 20 }]} source={require('../assets/Menu.png')} />
                 </TouchableOpacity>
                 <TouchableOpacity>
