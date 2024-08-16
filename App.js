@@ -79,7 +79,7 @@ const DrawnerScreenWithDrawner = () => {
         <Drawer.Navigator initialRouteName={SCREENS.acceuil} 
         drawerContent={(props)=>
         <DrawerContentScrollView {...props}>
-            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
+            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#3C3C3C', width:"100%",height:300,marginTop:-25}}/>
             <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
             <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
             <DrawerItem label={'Parametre'} onPress={()=>{props.navigation.navigate(SCREENS.setting)}}/>
@@ -94,7 +94,7 @@ const DrawnerScreenWithDrawner2 = () => {
         <Drawer.Navigator initialRouteName={SCREENS.categorie} 
         drawerContent={(props)=>
         <DrawerContentScrollView {...props}>
-            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
+            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#3C3C3C', width:"100%",height:300,marginTop:-25}}/>
             <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
             <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
             <DrawerItem label={'Parametre'} onPress={()=>{props.navigation.navigate(SCREENS.setting)}}/>
@@ -109,7 +109,7 @@ const DrawnerScreenWithDrawner3 = () => {
         <Drawer.Navigator initialRouteName={SCREENS.replay} 
         drawerContent={(props)=>
         <DrawerContentScrollView {...props}>
-            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#FFB400', width:"100%",height:300,marginTop:-25}}/>
+            <Image source={require('./assets/IBAlogo.png')} style={{backgroundColor:'#3C3C3C', width:"100%",height:300,marginTop:-25}}/>
             <DrawerItem label={'A propos d\'IBA'} onPress={()=>{props.navigation.navigate(SCREENS.about)}}/>
             <DrawerItem label={'Termes et conditions'} onPress={()=>{props.navigation.navigate(SCREENS.privacy)}}/>
             <DrawerItem label={'Parametre'} onPress={()=>{props.navigation.navigate(SCREENS.setting)}}/>
